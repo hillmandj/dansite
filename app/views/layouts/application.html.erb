@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daniel Hillman</title>
+  <%= google_webfonts_init({google: ['Droid Serif', 'Open Sans', 'Oswald', 'Roboto']}) %>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+<div id='content'>
+  <div id='masthead'>
+    <div id='name'>
+      Daniel Hillman
+    </div>
+    <div id='icon'>
+      <i class='fa fa-gamepad'></i>
+    </div>
+  </div>
+
+  <div id='navigation'>
+    <ul>
+      <li><a href='#'>About</a></li>
+      <li><a href='#'>Blog</a></li>
+      <li><a href='#'>Contact</a></li>
+    </ul>
+  </div>
+
+  <div id='main'>
+    <%= yield %>
+  </div>
+
+  </div>
+
+</body>
+</html>
