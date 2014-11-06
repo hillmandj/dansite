@@ -1,0 +1,48 @@
+body, html
+  height: 100%
+
+@media only screen and (min-width : 1022px)
+  body #content
+    height: 600px
+
+#content
+  width: 70%
+  height: 100%
+  margin: 50px auto
+  border-top: 5px solid #e69500
+  border-bottom: 5px solid #e69500
+
+#masthead
+  height: 40px
+  font-size: 30px
+  font-weight: bold
+  #name
+    font-family: 'Droid Serif', sans-serif
+    line-height: 40px
+    a
+      color: #000
+      text-decoration: none
+  #icon
+    line-height: 40px
+
+#navigation
+  height: 30px
+  margin-top: 8px
+  border-bottom: 1px solid #d3d3d3
+  font-family: 'Open Sans'
+  font-size: 16px
+  font-weight: bold
+  ul
+    margin: 0px
+    padding: 0px
+    li
+      margin-right: 15px
+      line-height: 30px
+      list-style-type: none
+      float: left
+      a
+        text-decoration: none
+        color: #56524d
+        &:hover
+          color: orange
+          transition: 1.5s

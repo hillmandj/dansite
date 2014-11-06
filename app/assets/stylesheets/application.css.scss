@@ -9,53 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require dan
  */
 
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
-
-#content {
-  width: 80%;
-  height: 600px;
-  margin: 50px auto;
-  border-top: 5px solid #e69500;
-  border-bottom: 5px solid #e69500;
-}
-
-#masthead {
-  height: 40px;
-  font-family: 'Droid Serif', sans-serif;
-  font-size: 30px;
-  font-weight: bold;
-  #name {
-    float: left;
-    }
-  #icon {
-    float: right;
-  }
-}
-
-#navigation {
-  height: 30px;
-  border-bottom: 1px solid #d3d3d3;
-  font-family: 'Open Sans';
-  font-size: 20px;
-  font-weight: bold;
-  ul {
-    padding: 0px;
-    li {
-      margin-right: 15px;
-      list-style-type: none;
-      float: left;
-      a {
-        text-decoration: none;
-        color: #56524d;
-        &:hover {
-          color: orange;
-          transition: 1.5s;
-        }
-      }
-    }  
-  }
-}
