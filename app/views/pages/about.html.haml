@@ -1,7 +1,10 @@
 #about-container
   %h3#banner
-    :escaped
-      { :about_me => 'awesome' }
+    \{
+    %span#page-title{:class => 'thing'} :about 
+    \=> 
+    %span#dan-is 'me' 
+    \}
   %p#about-me
     Hi! It seems that for some reason you've stumbled upon my site. I'm currently a Consulting Developer at
     = link_to 'PublicStuff', 'http://www.publicstuff.com', :target => '_blank'

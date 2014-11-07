@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Daniel Hillman</title>
-  <%= google_webfonts_init({google: ['Droid Serif', 'Open Sans', 'Oswald', 'Roboto']}) %>
+  <%= google_webfonts_init({google: @fonts}) %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -11,7 +11,7 @@
 <div id='content'>
   <div id='masthead'>
     <div id='name' class='pull-left'>
-      <a href=<%= root_url  %>>Daniel Hillman</a>
+      <a href=<%= root_url %>>Daniel Hillman</a>
     </div>
     <div id='icon' class='pull-right'>
       <i class='fa fa-gamepad'></i>
@@ -19,7 +19,7 @@
   </div>
   <div id='navigation'>
     <ul>
-      <li><a href='#'>About</a></li>
+      <li><a href=<%= root_url %>>About</a></li>
       <li><a href='#'>Blog</a></li>
       <li><a href='#'>Contact</a></li>
     </ul>
