@@ -46,7 +46,9 @@ body, html
         &:hover
           color: orange
           transition: 1.5s
-        &:active
-          -webkit-animation: neon5 1s ease-in-out alternate
-          -moz-animation: neon5 1s ease-in-out alternate
-          animation: neon5 1s ease-in-out alternate
+
+.neon-red
+  @include neon-glow(neon1)
+
+.neon-orange
+  @include neon-glow(neon5)

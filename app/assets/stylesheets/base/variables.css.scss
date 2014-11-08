@@ -1,0 +1,44 @@
+@-webkit-keyframes neon1 {
+  from {
+    text-shadow: 0 0 5px #fff, 
+                 0 0 10px #fff, 
+                 0 0 15px #fff, 
+                 0 0 20px #FF1177,
+                 0 0 35px #FF1177, 
+                 0 0 40px #FF1177, 
+                 0 0 50px #FF1177, 
+                 0 0 75px #FF1177
+  }
+  to {  
+    text-shadow: 0 0 2.5px #fff, 
+                 0 0 5px #fff, 
+                 0 0 7.5px #fff, 
+                 0 0 10px #FF1177, 
+                 0 0 17.5px #FF1177, 
+                 0 0 20px #FF1177, 
+                 0 0 25px #FF1177, 0 0 37.5px #FF1177
+  }
+}
+
+@-webkit-keyframes neon5 {
+  from {
+    text-shadow: 0 0 2px #fff, 
+                 0 0 4px #fff, 
+                 0 0 8px #fff, 
+                 0 0 10px #FF9900, 
+                 0 0 25px #FF9900, 
+                 0 0 27px #FF9900, 
+                 0 0 31px #FF9900, 
+                 0 0 46px #FF9900
+  }
+  to {  
+    text-shadow: 0 0 1px #fff, 
+                 0 0 2px  #fff, 
+                 0 0 4px  #fff, 
+                 0 0 5px #FF9900, 
+                 0 0 12.5px #FF9900, 
+                 0 0 13.5px #FF9900, 
+                 0 0 15.5px #FF9900, 
+                 0 0 23px #FF9900
+  }
+}
