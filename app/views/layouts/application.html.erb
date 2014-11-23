@@ -19,9 +19,9 @@
   </div>
   <div id='navigation'>
     <ul>
-      <li><a href=<%= root_url %>>About</a></li>
-      <li><a href='#'>Blog</a></li>
-      <li><a href='#'>Contact</a></li>
+      <li><a href=<%= about_url %> class=<%='active' if action?('about') %>>About</a></li>
+      <li><a href='#' class=<%='active' if action?('blog')%>>Blog</a></li>
+      <li><a href=<%= contact_url %> class=<%='active' if action?('contact') %>>Contact</a></li>
     </ul>
   </div>
 

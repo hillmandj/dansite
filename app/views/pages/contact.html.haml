@@ -1,0 +1,28 @@
+#contact-container
+  %h3#banner
+    %span.bracket [
+    %span#page-title :contact
+    %span.comma ,
+    %span#dan-is :me
+    %span.bracket ]
+  %dl#contact-list
+    .row
+      %dt 
+        %i.fa.fa-envelope
+        Email:
+      %dd= mail_to 'hillmandj@gmail.com'
+    .row
+      %dt
+        %i.fa.fa-github
+        Github:
+      %dd= link_to nil, 'http://www.github.com/hillmandj', :target => '_blank'
+    .row
+      %dt 
+        %i.fa.fa-facebook-square
+        Facebook:
+      %dd= link_to nil, 'http://www.facebook.com/hilmandj', :target => '_blank'
+    .row
+      %dt
+        %i.fa.fa-linkedin-square
+        LinkedIn:
+      %dd= link_to nil, 'http://www.linkedin.com/hillmandj', :target => '_blank'
