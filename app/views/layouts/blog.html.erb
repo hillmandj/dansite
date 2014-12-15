@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daniel Hillman</title>
+  <%= google_webfonts_init({google: @fonts}) %>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body class="<%= controller_name %> <%= action_name %>">
+ <div class='container'>
+  <div id='sidebar' class='col-lg-3'>
+    <div id='sidebar-brand'>
+        <a href=<%= root_url %>>Daniel Hillman</a>
+    </div>
+
+    <div id='sidebar-nav'>
+      <ul>
+        <li><a href=<%= about_url %>>About</a></li>
+        <li><a href=<%= posts_path %>>Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id='main' class='col-lg-9'>
+    <%= yield %>
+  </div>
+</div>
+</body>
+</html>
+

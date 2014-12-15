@@ -6,6 +6,7 @@
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
 <div id='content'>
@@ -20,7 +21,7 @@
   <div id='navigation'>
     <ul>
       <li><a href=<%= about_url %> class=<%='active' if action?('about') %>>About</a></li>
-      <li><a href='#' class=<%='active' if action?('blog')%>>Blog</a></li>
+      <li><a href=<%= posts_path %> class=<%='active' if action?('blog')%>>Blog</a></li>
       <li><a href=<%= contact_url %> class=<%='active' if action?('contact') %>>Contact</a></li>
     </ul>
   </div>
