@@ -8,7 +8,7 @@ html, body
   border-bottom: 5px solid #e69500
 
 #main
-  padding: 5% 0
+  padding: 20px 0px
 
 #masthead
   height: 40px
@@ -44,7 +44,7 @@ html, body
         text-decoration: none
         color: #56524d
         &:hover
-          color: orange
+          color: #e69500
           transition: 1.5s
 
 .neon-red
@@ -52,3 +52,8 @@ html, body
 
 .neon-orange
   @include neon-glow(neon5)
+
+//Small Browser Width
+@media screen and (max-width: 504px)
+  #content
+    width: 400px

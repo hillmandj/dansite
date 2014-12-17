@@ -46,6 +46,7 @@ end
 
 group :development, :test do
   gem 'byebug'
+  gem 'forgery'
   gem 'rspec-rails'
   gem 'factory_girl_rails', '~> 4.5'
   gem 'database_cleaner'
