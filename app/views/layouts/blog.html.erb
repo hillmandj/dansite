@@ -12,11 +12,16 @@
  <div id='blog-content'> 
   <div id='sidebar'>
     <div id='sidebar-brand'>
-        <a href=<%= root_url %>>Daniel Hillman</a>
+        <a href=<%= root_url %>><span id='first-name'>Daniel</span><span id='last-name'> Hillman</span></a>
     </div>
     <ul id='sidebar-nav'>
+      <li id='foreign-links'>
+        <a href='http://github.com/hillmandj' target='_blank'><i class='fa fa-github'></i></a>
+        <a href='http://facebook.com/hillmandj' target='_blank'><i class='fa fa-facebook'></i></a>
+        <a href='http://linkedin.com/in/hillmandj' target='_blank'><i class='fa fa-linkedin'></i></a>
+      </li>
+      <li><a href=<%= posts_path %>>Posts</a></li>
       <li><a href=<%= about_url %>>About</a></li>
-      <li><a href=<%= posts_path %>>Blog</a></li>
     </ul>
   </div>
   <div id='blog-main'>
