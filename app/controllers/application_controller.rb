@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   private
   
   def set_google_fonts
-    @fonts = ['Droid Serif', 'Ubuntu', 'Roboto', 'Open Sans', 'Rokkitt', 'Inconsolata', 'Oswald', 'Raleway', 'Signika Negative']
+    @fonts = ['Droid Serif', 'Dosis', 'Roboto', 'Open Sans', 'Rokkitt', 'Inconsolata', 'Raleway', 'Lato']
   end
 end
