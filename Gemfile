@@ -26,6 +26,9 @@ gem 'autoprefixer-rails'
 # Use Google Web Fonts
 gem 'google-webfonts-rails'
 
+# Use Devise for authentication
+gem 'devise'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

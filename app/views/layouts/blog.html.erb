@@ -10,7 +10,7 @@
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
  <div id='blog-content'> 
-  <div id='sidebar'>
+  <div id='sidebar' class='pull-left'>
     <div id='sidebar-brand'>
         <a href=<%= root_url %>><span id='first-name'>Daniel</span><span id='last-name'> Hillman</span></a>
     </div>
@@ -24,7 +24,22 @@
       <li><a href=<%= about_url %>>About</a></li>
     </ul>
   </div>
-  <div id='blog-main'>
+  <div id='blog-main' class='pull-left'>
+    <div id='user-nav' class='pull-right'>
+      <% if user_signed_in? %>
+        Logged in as: <strong><%= current_user.email %></strong>
+        <%= link_to 'Edit Profile', edit_user_registration_path %> |
+        <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+      <% else %>
+        <%= link_to 'Sign Up', new_user_registration_path %> |
+        <%= link_to 'Login', new_user_session_path %>
+      <% end %>
+    </div>
+
+    <% flash.each do |key, message| %>
+      <div class="alert alert-<%= key %>"><%= message %></div>
+    <% end %>
+
     <%= yield %>
   </div>
 </div>
