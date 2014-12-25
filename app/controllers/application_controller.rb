@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
   def set_google_fonts
     @fonts = ['Droid Serif', 'Dosis', 'Roboto', 'Open Sans', 'Rokkitt', 'Inconsolata', 'Raleway', 'Lato']
   end
+
+  def after_sign_in_path_for(resource)
+    posts_path
+  end
+
+  def after_sign_out_path_for(resource)
+    posts_path
+  end
 end
