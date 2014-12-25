@@ -17,4 +17,8 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     posts_path
   end
+
+  def admin?
+    current_user.admin
+  end
 end

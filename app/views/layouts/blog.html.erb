@@ -23,25 +23,17 @@
       <li><a href=<%= posts_path %>>Posts</a></li>
       <li><a href=<%= about_url %>>About</a></li>
       <li>
-        <div id='user-nav'>
           <% if user_signed_in? %>
             <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
             <br/>
-            <%= link_to 'Edit Profile', edit_user_registration_path %>
+            <%= link_to 'Settings', edit_user_registration_path %>
           <% else %>
             <%= link_to 'Login', new_user_session_path %>
-            <br/>
-            <%= link_to 'Sign Up', new_user_registration_path %>
           <% end %>
-        </div>
       </li>
     </ul>
   </div>
   <div id='blog-main' class='pull-left'>
-    <% flash.each do |key, message| %>
-      <div class="alert alert-<%= key %>"><%= message %></div>
-    <% end %>
-
     <%= yield %>
   </div>
 </div>
