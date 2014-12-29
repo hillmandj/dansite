@@ -4,8 +4,8 @@ html, body
 #content
   width: 63%
   margin: 50px auto
-  border-top: 5px solid #e69500
-  border-bottom: 5px solid #e69500
+  border-top: 5px solid $black
+  border-bottom: 5px solid $black
   font-family: 'Lato', sans-serif
 
 #main
@@ -25,7 +25,7 @@ html, body
 
 #navigation
   height: 30px
-  border-bottom: 1px solid #d3d3d3
+  border-bottom: 1px solid $gray
   font-size: 15px
   font-weight: bold
   ul
@@ -37,12 +37,12 @@ html, body
       list-style-type: none
       float: left
       a.active
-        color: #e69500
+        color: $orange
       a
         text-decoration: none
-        color: #717171
+        color: $darkgrey
         &:hover
-          color: #b6b6b6 
+          color: $lightgray
           transition: 1.0s
 
 .posts, .registrations, .sessions, .passwords, .confirmations, .unlocks
@@ -54,12 +54,6 @@ html, body
     width: 300px
     .btn-primary
       margin-bottom: 4px
-
-.neon-red
-  @include neon-glow(neon1)
-
-.neon-orange
-  @include neon-glow(neon5)
 
 //Small Browser Width
 @media screen and (max-width: 504px)

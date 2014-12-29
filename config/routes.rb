@@ -5,13 +5,15 @@ Dansite::Application.routes.draw do
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
 
-  get "posts/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   resources :posts
+
   # You can have the root of your site routed with "root"
   root 'pages#about'
+
+  get 'work' => 'pages#work'
   get 'about' => 'pages#about'
   get 'contact' => 'pages#contact'
   # Example of regular route:
