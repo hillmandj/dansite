@@ -9,6 +9,16 @@ RSpec.describe Post, :type => :model do
     expect(Post.count).to eq(1)
   end
 
+  it 'should not save without a title' do
+    post.title = ''
+    post.should_not be_valid
+  end
+
+  it 'should not save without content' do
+    post.content = ''
+    post.should_not be_valid
+  end
+
   it 'should edit a post' do
     post.update(:title => 'New Title')
     post.save
