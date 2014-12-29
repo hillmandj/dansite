@@ -11,17 +11,17 @@ RSpec.describe Project, :type => :model do
 
   it 'must have a name' do
     project.name = ''
-    project.should_not be_valid  
+    expect(project).not_to be_valid  
   end
 
   it 'must have an image' do
     project.image_url = nil
-    project.should_not be_valid
+    expect(project).not_to be_valid
   end
 
   it 'must have a description' do
     project.description = ''
-    project.should_not be_valid
+    expect(project).not_to be_valid
   end
 
   it 'can edit a project' do
