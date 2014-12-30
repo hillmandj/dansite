@@ -12,6 +12,7 @@
   #about-me
     font-family: 'Roboto'
     font-size: 17px
+
 .pages.contact
   #banner
     margin: 0px 0px 35px 0px
@@ -38,6 +39,30 @@
     dd
       margin: 0px
 
+.pages.work
+  #banner
+    margin-top: 0px
+    font-family: 'Droid Serif', sans-serif
+    font-size: 35px
+    font-weight: bold
+    color: $charcoal
+    span#sites
+      color: $lightblue
+    span#projects
+      color: $orange
+  #intro
+    margin: 20px 0px
+    font-size: 20px
+  #work-list
+    padding: 0px
+    font-size: 18px
+    h3.name
+      margin: 0px auto 15px auto
+      font-weight: bold
+    li
+      list-style-type: none
+
+
 @media screen and (max-width: 752px)
   .pages.about
     #about-me
@@ -47,3 +72,9 @@
       font-size: 14px
       dt
         width: 90px
+  .pages.work
+    #intro
+      font-size: 16px
+      text-align: center
+    #work-list
+      font-size: 14px

@@ -1,9 +1,16 @@
 #work-container
-  %h3#work-banner Some projects I've worked on
+  %h3#banner 
+    = surround '%r(', ')' do
+      %span#sites sites
+      %span#bar><
+        \|
+      %span#projects projects 
+  #intro Below is a list of sites I've contributed to and some personal projects.
   %ul#work-list
     - @projects.each do |project|
       %li
-        %h3=link_to project.name, project.site_url
-        .image-wrapper
+        %h3.name=link_to project.name, project.site_url
+        .image-wrapper.text-center
           =image_tag project.photo.url(:medium)
-        %p.description=simple_format(project.description)
+        .description.text-center
+          =simple_format(project.description)
