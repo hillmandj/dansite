@@ -29,9 +29,6 @@ gem 'google-webfonts-rails'
 # Use Devise for authentication
 gem 'devise'
 
-# Use Paperclip for images
-gem 'paperclip'
-
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
