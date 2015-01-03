@@ -14,9 +14,9 @@ RSpec.describe Project, :type => :model do
     expect(project).not_to be_valid  
   end
 
-  xit 'must have an image' do
-    #project.image_url = nil
-    #expect(project).not_to be_valid
+  it 'can have no image' do
+    project.image_url = nil
+    expect(project).to be_valid
   end
 
   it 'must have a description' do

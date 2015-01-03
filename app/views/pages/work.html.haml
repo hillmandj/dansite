@@ -10,8 +10,9 @@
     - @projects.each do |project|
       %li
         %h3.name=link_to project.name, project.site_url, :target => '_blank'
-        .image-wrapper.text-center
-          =link_to project.site_url, :target => '_blank'  do
-            =image_tag project.image_url, :class => 'img-responsive'
+        - if project.has_image?
+          .image-wrapper.text-center
+            =link_to project.site_url, :target => '_blank'  do
+              =image_tag project.image_url, :class => 'img-responsive'
         .description.text-center
           =simple_format(project.description)
