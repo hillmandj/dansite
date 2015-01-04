@@ -18,7 +18,7 @@ if Rails.env == 'production'
                   }, 
                   {
                     :name => 'Chloe + Isabel', 
-                    :description => 'Chloe and Isabel is a jewelery brand that uses technology to facilitate the direct sale of it\'s products. I worked there initially as a QAAutomation Engineer, writing code to ensure that the site functioned properly. I then began contributing to the site itself, fixing bugs and rebuilding portions of the site dedicated to it\'s administration', 
+                    :description => 'Chloe and Isabel is a jewelery brand that uses technology to facilitate the direct sale of it\'s products. I worked there initially as a QA Automation Engineer, writing code to ensure that the site functioned properly. I then began contributing to the site itself, fixing bugs and rebuilding portions of the site dedicated to it\'s administration', 
                     :image_url => 'projects/cplusi.png', 
                     :site_url => 'http://chloeandisabel.com'
                   },
