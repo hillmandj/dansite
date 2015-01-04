@@ -8,7 +8,7 @@
 
 if Rails.env == 'production'
   User.create(:email => ENV['ADMIN_EMAIL'], :password => ENV['ADMIN_PASSWORD'], :admin => true)
-  Post.create(:title => 'Hello World!', :description => "Hi! Welcome to my blog. I'm happy to have finally finished the first version of this site. I still consider it a work in progress, but it was a great exercise. I encourage every developer to take the time to put one together.\nStay tuned for much more (actual) writing to come in the near future. Hope you guys drop by later and check it out!")
+  Post.create(:title => 'Hello World!', :content => "Hi! Welcome to my blog. I'm happy to have finally finished the first version of this site. I still consider it a work in progress, but it was a great exercise. I encourage every developer to take the time to put one together.\nStay tuned for much more (actual) writing to come in the near future. Hope you guys drop by later and check it out!")
   Project.create([
                   {
                     :name => 'PublicStuff', 
