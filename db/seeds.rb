@@ -31,7 +31,7 @@ if Rails.env == 'production'
                     :name => 'Huffman Encoder',
                     :description => 'Python implementation of Huffman\'s compression algorithm.',
                     :site_url => 'https://github.com/hillmandj/huffmanencoder'
-                  }
+                  },
                   {
                     :name => 'Sort Bot',
                     :description => 'This is a script I wrote while at MedTech Risk Management to help me sort the hundreds of incident reports they received each month automatically.',
