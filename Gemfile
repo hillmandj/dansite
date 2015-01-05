@@ -51,6 +51,8 @@ group :development, :test do
   gem 'byebug'
   gem 'forgery'
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'cucumber-rails', :require => false
   gem 'factory_girl_rails', '~> 4.5'
   gem 'database_cleaner'
 end
