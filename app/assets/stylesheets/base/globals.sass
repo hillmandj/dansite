@@ -3,6 +3,7 @@ html, body
 
 #content
   width: 63%
+  max-width: 1000px
   margin: 50px auto
   border-top: 5px solid $black
   border-bottom: 5px solid $black
@@ -59,3 +60,29 @@ html, body
 @media screen and (max-width: 504px)
   #content
     width: 400px
+
+//iPhone < 5
+@media screen and (aspect-ratio: 2/3), (aspect-ratio: 3/2)
+  #content
+    width: 90%
+
+//iPhone 5
+@media screen and (aspect-ratio: 40/71), (aspect-ratio: 71/40)
+  #content
+    width: 90%
+
+//iPhone 6 - Portrait
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait)
+  #content
+    width: 90%
+
+//iPhone 6 - Landscape
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape)
+  #content
+    width: 90%
+
+//iPhone 6+
+@media screen and (aspect-ratio: 16/9), (aspect-ratio: 9/16)
+  #content
+    width: 90%
+
