@@ -56,33 +56,15 @@ html, body
     .btn-primary
       margin-bottom: 4px
 
-//Small Browser Width
-@media screen and (max-width: 649px)
-  #content
-    width: 400px
-
-//iPhone < 5
-@media screen and (aspect-ratio: 2/3), (aspect-ratio: 3/2)
+//Small Displays
+@media only screen and (min-width: 320px) and (max-width: 480px)
   #content
     width: 90%
 
-//iPhone 5
-@media screen and (aspect-ratio: 40/71), (aspect-ratio: 71/40)
+@media only screen and (min-width: 480px) and (max-width: 600px)
   #content
     width: 90%
 
-//iPhone 6 - Portrait
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: portrait)
+@media only screen and (min-width: 600px) and (max-width: 801px)
   #content
     width: 90%
-
-//iPhone 6 - Landscape
-@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation: landscape)
-  #content
-    width: 90%
-
-//iPhone 6+
-@media screen and (aspect-ratio: 16/9), (aspect-ratio: 9/16)
-  #content
-    width: 90%
-
