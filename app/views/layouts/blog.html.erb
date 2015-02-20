@@ -3,6 +3,9 @@
 <head>
   <title>Daniel Hillman</title>
   <%= google_webfonts_init({google: ['Droid Serif', 'Roboto', 'Rokkitt','Open Sans', 'Raleway', 'Lato']}) %>
+  <%= favicon_link_tag 'icons/danicon-32x32.png', :rel => 'icon', :sizes => '32x32', :type => 'image/png' %>
+  <%= favicon_link_tag 'icons/danicon-96x96.png', :rel => 'icon', :sizes => '96x96', :type => 'image/png' %>
+  <%= favicon_link_tag 'icons/danicon-16x16.png', :rel => 'icon', :sizes => '16x16', :type => 'image/png' %>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
