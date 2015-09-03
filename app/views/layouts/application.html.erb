@@ -7,34 +7,34 @@
   <%= favicon_link_tag 'icons/favicon-96x96.png', :rel => 'icon', :sizes => '96x96', :type => 'image/png' %>
   <%= favicon_link_tag 'icons/favicon-16x16.png', :rel => 'icon', :sizes => '16x16', :type => 'image/png' %>
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
-<div id='content'>
-  <div id='masthead'>
-    <div id='name' class='pull-left'>
-      <a href=<%= root_url %>>Daniel Hillman</a>
+  <div id='content'>
+    <div id='masthead'>
+      <div id='name' class='pull-left'>
+        <a href=<%= root_url %>>Daniel Hillman</a>
+      </div>
+      <div id='icon' class='pull-right'>
+        <i class='fa fa-gamepad'></i>
+      </div>
     </div>
-    <div id='icon' class='pull-right'>
-      <i class='fa fa-gamepad'></i>
+    <div id='navigation'>
+      <ul>
+        <li><a href=<%= about_url %> class=<%='active' if action?('about') %>>About</a></li>
+        <li><a href=<%= work_url %> class=<%='active' if action?('work') %>>Work</a></li>
+        <li><a href=<%= posts_path %> class=<%='active' if action?('blog')%>>Blog</a></li>
+        <li><a href=<%= contact_url %> class=<%='active' if action?('contact') %>>Contact</a></li>
+      </ul>
     </div>
-  </div>
-  <div id='navigation'>
-    <ul>
-      <li><a href=<%= about_url %> class=<%='active' if action?('about') %>>About</a></li>
-      <li><a href=<%= work_url %> class=<%='active' if action?('work') %>>Work</a></li>
-      <li><a href=<%= posts_path %> class=<%='active' if action?('blog')%>>Blog</a></li>
-      <li><a href=<%= contact_url %> class=<%='active' if action?('contact') %>>Contact</a></li>
-    </ul>
+
+    <div id='main'>
+      <%= yield %>
+    </div>
   </div>
 
-  <div id='main'>
-    <%= yield %>
-  </div>
-
-  </div>
+  <%= javascript_include_tag "application" %>
 
 </body>
 </html>
