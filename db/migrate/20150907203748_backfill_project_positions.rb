@@ -3,7 +3,7 @@ class BackfillProjectPositions < ActiveRecord::Migration
     projects_and_positions = {
       'Handy' => 0,
       'PublicStuff' => 1,
-      'Chole + Isabel' => 2,
+      'Chloe + Isabel' => 2,
       'Tic Tac Toe' => 3,
       'Huffman Encoder' => 4,
       'Sort Bot' => 5
