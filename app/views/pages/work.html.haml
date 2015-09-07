@@ -1,10 +1,10 @@
 #work-container
-  %h3#banner 
+  %h3#banner
     = surround '%r(', ')' do
       %span#sites sites
       %span#bar><
         \|
-      %span#projects projects 
+      %span#projects projects
   #intro Below is a list of sites I've contributed to and some personal projects.
   %ul#work-list
     - @projects.each do |project|
