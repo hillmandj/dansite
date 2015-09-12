@@ -15,8 +15,9 @@ class PostsController < ApplicationController
   end
 
   def preview
-    puts "DID IT"
-    post_data = {title: post_params['title'], content: post_params['content']}
+    post_data = {
+      preview_title: params['title'],
+      preview_content: RedCloth.new(params['content']).to_html}
     render json: post_data
   end
 

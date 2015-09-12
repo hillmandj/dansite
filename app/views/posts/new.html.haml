@@ -1,4 +1,9 @@
 %h2 New Post
+#preview_container.hidden
+  %h1#preview_title.post-title
+  #preview_date.post-date=Time.current.strftime("%B %d, %Y")
+  #preview_content.post-content
+
 = form_for @post do |f|
   .form-group
     = f.label 'Title'
@@ -8,4 +13,4 @@
     = f.text_area 'content', :class => 'form-control'
   .form-group
     = f.submit 'Submit', :class => 'btn btn-primary'
-    = link_to 'Preview', '#', :remote => true, :class => 'btn btn-success'
+    = link_to 'Preview', '#', :remote => true, :id => 'post_preview', :class => 'btn btn-success'
