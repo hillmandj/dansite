@@ -1,16 +1,17 @@
-%h2 New Post
-#preview_container.hidden
+%h2#post_header New Post
+#preview_container
   %h1#preview_title.post-title
   #preview_date.post-date=Time.current.strftime("%B %d, %Y")
   #preview_content.post-content
+  = link_to 'Hide Preview', '#', id: 'preview_hide', class: 'btn btn-info'
 
 = form_for @post do |f|
   .form-group
     = f.label 'Title'
-    = f.text_field 'title', :class => 'form-control'
+    = f.text_field 'title', class: 'form-control'
   .form-group
     = f.label 'Content'
-    = f.text_area 'content', :class => 'form-control'
+    = f.text_area 'content', class: 'form-control'
   .form-group
-    = f.submit 'Submit', :class => 'btn btn-primary'
-    = link_to 'Preview', '#', :remote => true, :id => 'post_preview', :class => 'btn btn-success'
+    = f.submit 'Submit', class: 'btn btn-primary'
+    = link_to 'Preview', '#', remote: true, id: 'post_preview', class: 'btn btn-success'
