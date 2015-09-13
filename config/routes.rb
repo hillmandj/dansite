@@ -8,7 +8,15 @@ Dansite::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  resources :posts, :path => 'blog'
+  resources :posts, :path => 'blog' do
+    collection do
+      post 'preview'
+    end
+
+    member do
+      post 'preview'
+    end
+  end
 
   # You can have the root of your site routed with "root"
   root 'pages#about'
@@ -50,7 +58,7 @@ Dansite::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

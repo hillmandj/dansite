@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   layout 'blog'
   before_action :authenticate_user!, :except => [:index, :show]
-  before_action :set_post, :except => [:index, :new, :create]
+  before_action :set_post, :except => [:index, :new, :preview, :create]
 
   def index
     @posts = Post.order('created_at DESC')
@@ -12,6 +12,14 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+  end
+
+  def preview
+    post_data = {
+      preview_title: params['title'],
+      preview_content: RedCloth.new(params['content']).to_html
+    }
+    render json: post_data
   end
 
   def create
@@ -31,7 +39,7 @@ class PostsController < ApplicationController
       redirect_to posts_path, :notice => 'Post successfully updated'
     else
       render 'edit'
-    end 
+    end
   end
 
   def destroy

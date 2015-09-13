@@ -40,23 +40,28 @@ html, body
       line-height: 30px
       list-style-type: none
       float: left
-      a.active
-        color: $orange
       a
         text-decoration: none
         color: $darkgrey
+        &.active
+          color: $orange
         &:hover
           color: $lightgray
           transition: 1.0s
 
-.posts, .registrations, .sessions, .passwords, .confirmations, .unlocks
+.posts,
+.registrations,
+.sessions,
+.passwords,
+.confirmations,
+.unlocks
   h2
     font-weight: bold
     display: inline
   form
     margin-top: 20px
     width: 300px
-    .btn-primary
+    .btn-primary, .btn-success
       margin-bottom: 4px
 
 //Extra-Small Displays
