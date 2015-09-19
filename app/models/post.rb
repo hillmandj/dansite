@@ -1,4 +1,4 @@
 class Post < ActiveRecord::Base
-  has_many :drafts
+  has_one :draft
   validates :title, :content, :presence => true
 end
