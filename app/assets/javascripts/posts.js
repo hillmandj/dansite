@@ -40,9 +40,9 @@ $(document).ready(function() {
   }
 
   var displayPreview = function(data) {
-    formElements.form.slideUp();
+    formElements.form.hide();
     formElements.header.hide();
-    previewElements.container.show();
+    previewElements.container.slideDown();
     previewElements.title.html(data['preview_title']);
     previewElements.content.html(data['preview_content']);
   }
