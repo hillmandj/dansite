@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907203748) do
+ActiveRecord::Schema.define(version: 20150919022014) do
+
+  create_table "drafts", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "post_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "drafts", ["post_id"], name: "index_drafts_on_post_id"
 
   create_table "posts", force: true do |t|
     t.string   "title"
