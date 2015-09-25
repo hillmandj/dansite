@@ -9,6 +9,7 @@ Dansite::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :posts, :path => 'blog' do
+
     collection do
       post 'preview'
     end
@@ -18,12 +19,16 @@ Dansite::Application.routes.draw do
     end
   end
 
+  resources :drafts
+
   # You can have the root of your site routed with "root"
   root 'pages#about'
 
   get 'work' => 'pages#work'
   get 'about' => 'pages#about'
   get 'contact' => 'pages#contact'
+  get 'draft_count' => 'drafts#draft_count'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

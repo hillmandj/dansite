@@ -1,0 +1,5 @@
+#preview-container
+  %h1#preview-title.post-title
+  #preview-date.post-date=Time.current.strftime("%B %d, %Y")
+  #preview-content.post-content
+  = link_to 'Hide Preview', '#', id: 'preview-hide', class: 'btn btn-info'

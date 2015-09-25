@@ -1,0 +1,16 @@
+%h3#blog-masthead Drafts
+%table#blog-posts.table.table-striped
+  %tbody
+    - if @drafts.present? && user_signed_in? && current_user.admin?
+      - @drafts.each do |draft|
+        %tr
+          %td.post-title.pull-left=link_to truncate(draft.title, :length => 50), draft_path(draft.id)
+          %td.post-date.pull-right=draft.created_at.strftime("%B %d, %Y")
+          %td.edit-post
+            =link_to edit_draft_path(draft.id) do
+              %i.fa.fa-pencil
+          %td.delete-post
+            =link_to draft_path(draft.id), :method => :delete, :confirm => 'Are you sure?' do
+              %i.fa.fa-remove
+    - else
+      %h3 No drafts

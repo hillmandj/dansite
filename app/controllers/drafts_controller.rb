@@ -1,16 +1,16 @@
 class DraftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_json_response_format
-  before_action :set_draft, except: [:index, :create]
-
+  before_action :set_draft, except: [:index, :create, :draft_count]
+  layout 'blog'
 
   def index
-    @drafts = Draft.unsaved.to_json
-    render json: @drafts
+    @drafts = Draft.unsaved
   end
 
   def show
-    render json: {title: @draft.title, content: @draft.content}, status: 200
+  end
+
+  def edit
   end
 
   def update
@@ -24,7 +24,7 @@ class DraftsController < ApplicationController
   def create
     @draft = Draft.new(draft_params)
     if @draft.save
-      render json: {status: 200, message: 'Draft saved'}, status: 200
+      redirect_to posts_path, notice: 'Draft saved'
     else
       render json: {status: 400, message: 'Draft failed to save'}, status: 400
     end
@@ -32,6 +32,11 @@ class DraftsController < ApplicationController
 
   def destroy
     @draft.destroy
+  end
+
+  def draft_count
+    count = Draft.count
+    render json: { draft_count: count }
   end
 
   private
