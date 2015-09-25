@@ -9,13 +9,13 @@ $(document).ready(function() {
   var previewElements = {
     'title' : $('#preview-title'),
     'content' : $('#preview-content'),
-    'container' : $('#preview-container'),
-    'content_container' : $('preview-content-container'),
+    'container' : $('#preview-content-container'),
     'hide_preview' : $('#preview-hide')
   };
 
   var draftElements = {
     'count' : $('#drafts-count'),
+    'drafts_link' : $('#drafts-link'),
     'save_button' : $('#save-draft')
   };
 
@@ -25,19 +25,28 @@ $(document).ready(function() {
     bindHidePreview();
   }
 
+  var initGlobalDraftElements = function() {
+    initDraftCount();
+    bindDraftLink();
+  }
+
   var initDraftCount = function() {
     $.ajax({
       url: '/draft_count',
       type: 'get',
       success: function(data) {
         draftElements.count.html(data['draft_count']);
+
+        if (data['draft_count'] > 0 && !isDraftsPage()) {
+          draftElements.drafts_link.addClass('bold');
+        }
       }
     })
   }
 
   var initForm = function() {
     if (isNewPostPage()) {
-      formElements.form = $('#new_post');
+      formElements.form = $('form.new_post');
     } else if (isEditPostPage()) {
       formElements.form = $('form.edit_post');
     }
@@ -69,6 +78,15 @@ $(document).ready(function() {
     });
   }
 
+  var bindDraftLink = function() {
+    draftElements.drafts_link.on('click', function() {
+      if ($(this).hasClass('bold')) {
+        $(this).removeClass('bold');
+      }
+      window.location = '/drafts'
+    });
+  }
+
   var bindSaveDraft = function() {
     draftElements.save_button.on('click', function() {
       formElements.form.attr('action', '/drafts');
@@ -88,6 +106,7 @@ $(document).ready(function() {
   }
 
   var hidePreview = function() {
+    previewElements.title.hide();
     previewElements.container.hide();
     formElements.header.show();
     formElements.form.slideDown();
@@ -101,15 +120,23 @@ $(document).ready(function() {
     return $('body').hasClass('posts edit');
   }
 
+  var isDraftsPage = function() {
+    return $('body').hasClass('drafts index');
+  }
+
   var shouldRunOnPage = function() {
     return isNewPostPage() || isEditPostPage();
   }
 
-  initDraftCount();
+  var run = function() {
+    initGlobalDraftElements();
 
-  if (shouldRunOnPage()) {
-    initForm();
-    initPreview();
-    bindElements();
+    if (shouldRunOnPage()) {
+      initForm();
+      initPreview();
+      bindElements();
+    }
   }
+
+  run();
 });

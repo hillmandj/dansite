@@ -32,6 +32,7 @@ class DraftsController < ApplicationController
 
   def destroy
     @draft.destroy
+    redirect_to drafts_path, :notice => 'Draft deleted'
   end
 
   def draft_count

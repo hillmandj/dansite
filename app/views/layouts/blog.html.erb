@@ -27,7 +27,7 @@
       <li><a href=<%= about_url %>>About</a></li>
       <li>
           <% if user_signed_in? %>
-            <%= link_to drafts_path do %>
+            <%= link_to '#', id: 'drafts-link' do %>
               Drafts (<span id='drafts-count'><%= @draft_count %></span>)
             <% end %>
             <br/>
