@@ -19,12 +19,6 @@ $(document).ready(function() {
     'save_button' : $('#save-draft')
   };
 
-  var bindElements = function() {
-    bindSaveDraft();
-    bindShowPreview();
-    bindHidePreview();
-  }
-
   var initGlobalDraftElements = function() {
     initDraftCount();
     bindDraftLink();
@@ -35,9 +29,13 @@ $(document).ready(function() {
       url: '/draft_count',
       type: 'get',
       success: function(data) {
-        draftElements.count.html(data['draft_count']);
+        //console.log(draftElements.count)
+        //console.log(data['draft_count']);
+        //if (draftElements.count.text() != data['draft_count']) {
+          draftElements.count.html(data['draft_count']);
+        //}
 
-        if (data['draft_count'] > 0 && !isDraftsPage()) {
+        if (data['draft_count'] > 0 && !isOneOfDraftsPages()) {
           draftElements.drafts_link.addClass('bold');
         }
       }
@@ -54,6 +52,12 @@ $(document).ready(function() {
 
   var initPreview = function() {
     previewElements.container.hide();
+  }
+
+  var bindElements = function() {
+    bindSaveDraft();
+    bindShowPreview();
+    bindHidePreview();
   }
 
   var bindShowPreview = function() {
@@ -120,18 +124,26 @@ $(document).ready(function() {
     return $('body').hasClass('posts edit');
   }
 
-  var isDraftsPage = function() {
+  var isDraftsIndexPage = function() {
     return $('body').hasClass('drafts index');
   }
 
-  var shouldRunOnPage = function() {
-    return isNewPostPage() || isEditPostPage();
+  var isEditDraftPage = function() {
+    return $('body').hasClass('drafts edit');
+  }
+
+  var isPreviewablePage = function() {
+    return isNewPostPage() || isEditPostPage() || isEditDraftPage();
+  }
+
+  var isOneOfDraftsPages = function() {
+    return isDraftsIndexPage() || isEditDraftPage();
   }
 
   var run = function() {
     initGlobalDraftElements();
 
-    if (shouldRunOnPage()) {
+    if (isPreviewablePage()) {
       initForm();
       initPreview();
       bindElements();
