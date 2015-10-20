@@ -1,8 +1,8 @@
 $(document).ready(function() {
   var formElements = {
-    'title' : $('[name="post[title]"]'),
+    'title' : $('[name*="title"]'),
     'header' : $('#post-header'),
-    'content' : $('[name="post[content]"]'),
+    'content' : $('[name*="content"]'),
     'preview_link' : $('#post-preview')
   };
 
@@ -29,11 +29,7 @@ $(document).ready(function() {
       url: '/draft_count',
       type: 'get',
       success: function(data) {
-        //console.log(draftElements.count)
-        //console.log(data['draft_count']);
-        //if (draftElements.count.text() != data['draft_count']) {
-          draftElements.count.html(data['draft_count']);
-        //}
+        draftElements.count.html(data['draft_count']);
 
         if (data['draft_count'] > 0 && !isOneOfDraftsPages()) {
           draftElements.drafts_link.addClass('bold');
@@ -47,6 +43,8 @@ $(document).ready(function() {
       formElements.form = $('form.new_post');
     } else if (isEditPostPage()) {
       formElements.form = $('form.edit_post');
+    } else if (isEditDraftPage()) {
+      formElements.form = $('form.edit_draft');
     }
   }
 
@@ -101,6 +99,11 @@ $(document).ready(function() {
   }
 
   var showPreview = function(data) {
+    // This is necessary after redirect to /drafts
+    if (formElements.form == undefined) {
+      initForm();
+    }
+
     formElements.form.hide();
     formElements.header.hide();
     previewElements.title.show();

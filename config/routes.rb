@@ -7,6 +7,14 @@ Dansite::Application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
+  #
+  # You can have the root of your site routed with "root"
+  root 'pages#about'
+
+  get 'work' => 'pages#work'
+  get 'about' => 'pages#about'
+  get 'contact' => 'pages#contact'
+  get 'draft_count' => 'drafts#draft_count'
 
   resources :posts, :path => 'blog' do
 
@@ -19,15 +27,16 @@ Dansite::Application.routes.draw do
     end
   end
 
-  resources :drafts
+  resources :drafts do
 
-  # You can have the root of your site routed with "root"
-  root 'pages#about'
+    collection do
+      post 'preview'
+    end
 
-  get 'work' => 'pages#work'
-  get 'about' => 'pages#about'
-  get 'contact' => 'pages#contact'
-  get 'draft_count' => 'drafts#draft_count'
+    member do
+      post 'preview'
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -4,10 +4,21 @@ class DraftsController < ApplicationController
   layout 'blog'
 
   def index
+    #@drafts = Draft.unsaved.to_json
+    #render json: @drafts
+
     @drafts = Draft.unsaved
   end
 
   def show
+  end
+
+  def preview
+    post_data = {
+      preview_title: params['title'],
+      preview_content: RedCloth.new(params['content']).to_html
+    }
+    render json: post_data
   end
 
   def edit
@@ -15,7 +26,8 @@ class DraftsController < ApplicationController
 
   def update
     if @draft.update(draft_params)
-      render json: {status: 200, message: 'Draft updated'}, status: 200
+      @post = @draft.create_post(title: @draft.title, content: @draft.content)
+      redirect_to posts_path(@post)
     else
       render json: {status: 400, message: 'Draft failed to update'}, status: 400
     end
