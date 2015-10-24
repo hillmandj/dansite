@@ -4,9 +4,6 @@ class DraftsController < ApplicationController
   layout 'blog'
 
   def index
-    #@drafts = Draft.unsaved.to_json
-    #render json: @drafts
-
     @drafts = Draft.unsaved
   end
 
@@ -14,11 +11,11 @@ class DraftsController < ApplicationController
   end
 
   def preview
-    post_data = {
+    draft_data = {
       preview_title: params['title'],
       preview_content: RedCloth.new(params['content']).to_html
     }
-    render json: post_data
+    render json: draft_data
   end
 
   def edit
@@ -26,7 +23,9 @@ class DraftsController < ApplicationController
 
   def update
     if @draft.update(draft_params)
-      @post = @draft.create_post(title: @draft.title, content: @draft.content)
+      @post = Post.create(title: @draft.title, content: @draft.content)
+      @draft.post = @post
+      @draft.save!
       redirect_to posts_path(@post)
     else
       render json: {status: 400, message: 'Draft failed to update'}, status: 400
@@ -48,7 +47,7 @@ class DraftsController < ApplicationController
   end
 
   def draft_count
-    count = Draft.count
+    count = Draft.unsaved.count
     render json: { draft_count: count }
   end
 
@@ -56,10 +55,6 @@ class DraftsController < ApplicationController
 
   def set_draft
     @draft = Draft.find(params[:id])
-  end
-
-  def set_json_response_format
-    request.format = :json
   end
 
   def draft_params
