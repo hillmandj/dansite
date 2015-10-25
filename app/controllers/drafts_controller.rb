@@ -4,7 +4,7 @@ class DraftsController < ApplicationController
   layout 'blog'
 
   def index
-    @drafts = Draft.unsaved
+    @drafts = Draft.all.order('created_at DESC')
   end
 
   def show
@@ -24,9 +24,8 @@ class DraftsController < ApplicationController
   def update
     if @draft.update(draft_params)
       @post = Post.create(title: @draft.title, content: @draft.content)
-      @draft.post = @post
-      @draft.save!
-      redirect_to posts_path(@post)
+      @draft.destroy!
+      redirect_to posts_path
     else
       render json: {status: 400, message: 'Draft failed to update'}, status: 400
     end
@@ -47,7 +46,7 @@ class DraftsController < ApplicationController
   end
 
   def draft_count
-    count = Draft.unsaved.count
+    count = Draft.all.count
     render json: { draft_count: count }
   end
 
