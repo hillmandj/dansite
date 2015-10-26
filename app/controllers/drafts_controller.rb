@@ -23,20 +23,25 @@ class DraftsController < ApplicationController
 
   def update
     if @draft.update(draft_params)
-      @post = Post.create(title: @draft.title, content: @draft.content)
-      @draft.destroy!
-      redirect_to posts_path
+      if params['update_draft']
+        redirect_to drafts_path, notice: 'Draft Updated'
+      elsif params['create_post']
+        @post = Post.create(title: @draft.title, content: @draft.content)
+        @draft.destroy!
+        redirect_to posts_path
+      end
     else
-      render json: {status: 400, message: 'Draft failed to update'}, status: 400
+      flash[:error] = 'Draft failed to update'
     end
   end
 
   def create
     @draft = Draft.new(draft_params)
-    if @draft.save
+    if @draft.save!
       redirect_to posts_path, notice: 'Draft saved'
     else
-      render json: {status: 400, message: 'Draft failed to save'}, status: 400
+      flash[:error] = 'Draft failed to save'
+      render 'posts/new'
     end
   end
 
