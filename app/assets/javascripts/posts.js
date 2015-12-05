@@ -119,6 +119,10 @@ $(document).ready(function() {
     formElements.form.slideDown();
   }
 
+  var userLoggedIn = function() {
+    return document.cookie.includes('signed_in=1');
+  }
+
   var isNewPostPage = function() {
     return $('body').hasClass('posts new');
   }
@@ -143,13 +147,19 @@ $(document).ready(function() {
     return isDraftsIndexPage() || isEditDraftPage();
   }
 
-  var run = function() {
-    initGlobalDraftElements();
+  var isBlogPage = function() {
+    return $('body').hasClass('posts') || $('body').hasClass('drafts')
+  }
 
-    if (isPreviewablePage()) {
-      initForm();
-      initPreview();
-      bindElements();
+  var run = function() {
+    if (userLoggedIn() && isBlogPage()) {
+      initGlobalDraftElements();
+
+      if (isPreviewablePage()) {
+        initForm();
+        initPreview();
+        bindElements();
+      }
     }
   }
 
