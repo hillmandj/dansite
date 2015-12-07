@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Daniel Hillman</title>
   <%= google_webfonts_init({google: ['Droid Serif', 'Roboto', 'Rokkitt', 'Open Sans', 'Raleway', 'Lato']}) %>
   <%= favicon_link_tag 'icons/favicon-32x32.png', :rel => 'icon', :sizes => '32x32', :type => 'image/png' %>
   <%= favicon_link_tag 'icons/favicon-96x96.png', :rel => 'icon', :sizes => '96x96', :type => 'image/png' %>
   <%= favicon_link_tag 'icons/favicon-16x16.png', :rel => 'icon', :sizes => '16x16', :type => 'image/png' %>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= csrf_meta_tags %>
+  <title>Daniel Hillman</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
