@@ -15,5 +15,8 @@
 /log/*.log
 /tmp
 
+# Ignore environment variables file
+/config/application.yml
+
 # Ignore swp
 *.swp
