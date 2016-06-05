@@ -4,14 +4,14 @@
     - if @posts.present?
       - @posts.each do |post|
         %tr
-          %td.post-title.pull-left=link_to truncate(post.title, length: 50), post_path(post.id)
+          %td.post-title.pull-left=link_to truncate(post.title, length: 50), post_path(post)
           %td.post-date.pull-right=post.created_at.strftime("%B %d, %Y")
           - if user_signed_in? && current_user.admin?
             %td.edit-post
-              =link_to edit_post_path(post.id) do
+              =link_to edit_post_path(post) do
                 %i.fa.fa-pencil
             %td.delete-post
-              =link_to post_path(post.id), method: :delete, data: { confirm: 'Are you sure?' } do
+              =link_to post_path(post), method: :delete, data: { confirm: 'Are you sure?' } do
                 %i.fa.fa-remove
     - else
       %h3 No posts yet, stay tuned!
