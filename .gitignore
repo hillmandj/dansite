@@ -15,5 +15,8 @@
 /log/*.log
 /tmp
 
+# Ignore files with sensitive information
+/config/application.yml
+
 # Ignore swp
 *.swp

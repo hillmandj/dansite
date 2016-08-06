@@ -1,6 +1,6 @@
 class DraftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_draft, except: [:index, :create, :draft_count]
+  before_action :set_draft, except: [:index, :preview, :new, :create, :draft_count]
   layout 'blog'
 
   def index
@@ -35,9 +35,17 @@ class DraftsController < ApplicationController
     end
   end
 
+  def new
+    @draft = Draft.new
+  end
+
   def create
     @draft = Draft.new(draft_params)
-    if @draft.save!
+
+    if params['create_post']
+      @post = Post.create(title: @draft.title, content: @draft.content)
+      redirect_to @post, notice: 'Post created'
+    elsif @draft.save!
       redirect_to posts_path, notice: 'Draft saved'
     else
       flash[:error] = 'Draft failed to save'
@@ -47,7 +55,7 @@ class DraftsController < ApplicationController
 
   def destroy
     @draft.destroy
-    redirect_to drafts_path, :notice => 'Draft deleted'
+    redirect_to drafts_path, notice: 'Draft deleted'
   end
 
   def draft_count
