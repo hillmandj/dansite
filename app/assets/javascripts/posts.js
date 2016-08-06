@@ -13,6 +13,7 @@ $(document).ready(function() {
     'hide_preview' : $('#preview-hide')
   };
 
+  // Note: these draft elements are either global or on posts/new
   var draftElements = {
     'count' : $('#drafts-count'),
     'drafts_link' : $('#drafts-link'),
@@ -41,6 +42,8 @@ $(document).ready(function() {
   var initForm = function() {
     if (isNewPostPage()) {
       formElements.form = $('form.new_post');
+    } else if (isNewDraftPage()) {
+      formElements.form = $('form.new_draft');
     } else if (isEditPostPage()) {
       formElements.form = $('form.edit_post');
     } else if (isEditDraftPage()) {
@@ -89,6 +92,7 @@ $(document).ready(function() {
     });
   }
 
+  // This is only for saving a draft when on posts/new
   var bindSaveDraft = function() {
     draftElements.save_button.on('click', function() {
       formElements.form.attr('action', '/drafts');
@@ -127,6 +131,10 @@ $(document).ready(function() {
     return $('body').hasClass('posts new');
   }
 
+  var isNewDraftPage = function() {
+    return $('body').hasClass('drafts new');
+  }
+
   var isEditPostPage = function() {
     return $('body').hasClass('posts edit');
   }
@@ -140,11 +148,11 @@ $(document).ready(function() {
   }
 
   var isPreviewablePage = function() {
-    return isNewPostPage() || isEditPostPage() || isEditDraftPage();
+    return isNewPostPage() || isNewDraftPage() || isEditPostPage() || isEditDraftPage();
   }
 
   var isOneOfDraftsPages = function() {
-    return isDraftsIndexPage() || isEditDraftPage();
+    return isDraftsIndexPage() || isNewDraftPage() || isEditDraftPage();
   }
 
   var isBlogPage = function() {
