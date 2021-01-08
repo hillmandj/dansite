@@ -1,4 +1,8 @@
 module PagesHelper
+  def twou_link
+    link_to('2U', 'https://www.2u.com', target: '_blank')
+  end
+
   def altru_link
     link_to('Altru', 'https://www.altrulabs.com', target: '_blank')
   end
