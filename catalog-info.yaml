@@ -7,6 +7,8 @@ metadata:
     example.com/custom: custom_label_value
   annotations:
     example.com/service-discovery: dansite
+    backstage.io/techdocs-ref: dir:.
+
   tags:
     - ruby
   links:
