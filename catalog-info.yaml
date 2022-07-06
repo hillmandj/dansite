@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dansite
+  description: Dan's personal website
+  labels:
+    example.com/custom: custom_label_value
+  annotations:
+    example.com/service-discovery: dansite
+  tags:
+    - ruby
+  links:
+    - url: http://www.daniel-hillman.com
+      title: Main Page
+      icon: dashboard
+      type: admin-dashboard
+spec:
+  type: website
+  lifecycle: production
+  owner: hillmandj
+  system: personal
