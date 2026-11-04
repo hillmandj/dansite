@@ -1,6 +1,6 @@
 %h2#post-header Edit Draft
 = render partial: 'preview'
-= form_for @draft do |f|
+= form_with model: @draft do |f|
   .form-group
     = f.label 'Title'
     = f.text_field 'title', class: 'form-control'
@@ -9,5 +9,5 @@
     = f.text_area 'content', class: 'form-control'
   .form-group
     = f.submit 'Create Post', name: 'create_post', class: 'btn btn-primary'
-    = link_to 'Preview', '#', remote: true, id: 'post-preview', class: 'btn btn-success'
+    = link_to 'Preview', '#', id: 'post-preview', class: 'btn btn-success'
     = f.submit 'Save Draft', name: 'update_draft', class: 'btn btn-danger'

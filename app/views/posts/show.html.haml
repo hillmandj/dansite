@@ -1,4 +1,4 @@
 %h1= @post.title
 .post-date= @post.created_at.strftime("%B %d, %Y")
 .post-content
-  = raw RedCloth.new(@post.content).to_html
+  = render_textile(@post.content)

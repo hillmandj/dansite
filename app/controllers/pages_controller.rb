@@ -6,6 +6,6 @@ class PagesController < ApplicationController
   end
 
   def work
-    @projects = Project.all.sort_by{|p| p.position}
+    @projects = Project.order(:position)
   end
 end

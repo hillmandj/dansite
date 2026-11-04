@@ -11,7 +11,7 @@
               =link_to edit_post_path(post) do
                 %i.fa.fa-pencil
             %td.delete-post
-              =link_to post_path(post), method: :delete, data: { confirm: 'Are you sure?' } do
+              = button_to post_path(post), method: :delete, class: 'btn btn-link delete-button', form: { data: { confirm: 'Are you sure?' } } do
                 %i.fa.fa-remove
     - else
       %h3 No posts yet, stay tuned!

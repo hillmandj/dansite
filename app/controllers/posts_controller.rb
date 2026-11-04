@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
-  layout 'blog'
-  before_action :authenticate_user!, :except => [:index, :show]
-  before_action :set_post, :except => [:index, :new, :preview, :create]
+  layout "blog"
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :set_post, except: [ :index, :new, :preview, :create ]
 
   def index
-    @posts = Post.order('created_at DESC')
+    @posts = Post.order(created_at: :desc)
   end
 
   def show
@@ -15,19 +15,18 @@ class PostsController < ApplicationController
   end
 
   def preview
-    post_data = {
-      preview_title: params['title'],
-      preview_content: RedCloth.new(params['content']).to_html
+    render json: {
+      preview_title: params[:title],
+      preview_content: helpers.render_textile(params[:content])
     }
-    render json: post_data
   end
 
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post, notice: 'Post successfully created'
+      redirect_to @post, notice: "Post successfully created"
     else
-      render 'new'
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -36,21 +35,21 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      redirect_to posts_path, notice: 'Post successfully updated'
+      redirect_to posts_path, notice: "Post successfully updated"
     else
-      render 'edit'
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
     @post.destroy
-    redirect_to posts_path, notice: 'Post deleted'
+    redirect_to posts_path, notice: "Post deleted", status: :see_other
   end
 
   private
 
   def set_post
-    @post = Post.find_by_slug!(params[:id])
+    @post = Post.find_by!(slug: params[:id])
   end
 
   def post_params

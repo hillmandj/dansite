@@ -1,40 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <%= google_webfonts_init({google: ['Droid Serif', 'Roboto', 'Rokkitt', 'Open Sans', 'Raleway', 'Lato']}) %>
-  <%= favicon_link_tag 'icons/favicon-32x32.png', :rel => 'icon', :sizes => '32x32', :type => 'image/png' %>
-  <%= favicon_link_tag 'icons/favicon-96x96.png', :rel => 'icon', :sizes => '96x96', :type => 'image/png' %>
-  <%= favicon_link_tag 'icons/favicon-16x16.png', :rel => 'icon', :sizes => '16x16', :type => 'image/png' %>
-  <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= csrf_meta_tags %>
-  <title>Daniel Hillman</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= render "shared/head", icon_prefix: "favicon" %>
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
-  <div id='content'>
-    <div id='masthead'>
-      <div id='name' class='pull-left'>
-        <a href=<%= root_url %>>Daniel Hillman</a>
+  <div id="content">
+    <div id="masthead">
+      <div id="name" class="pull-left">
+        <%= link_to "Daniel Hillman", root_path %>
       </div>
-      <div id='icon' class='pull-right'>
-        <i class='fa fa-gamepad'></i>
+      <div id="icon" class="pull-right">
+        <i class="fa fa-gamepad"></i>
       </div>
     </div>
-    <div id='navigation'>
+    <div id="navigation">
       <ul>
-        <li><a href=<%= about_url %> class=<%='active' if action?('about') %>>About</a></li>
-        <li><a href=<%= work_url %> class=<%='active' if action?('work') %>>Work</a></li>
-        <li><a href=<%= posts_path %> class=<%='active' if action?('blog')%>>Blog</a></li>
-        <li><a href=<%= contact_url %> class=<%='active' if action?('contact') %>>Contact</a></li>
+        <li><%= link_to "About", about_path, class: ("active" if action?("about")) %></li>
+        <li><%= link_to "Work", work_path, class: ("active" if action?("work")) %></li>
+        <li><%= link_to "Blog", posts_path %></li>
+        <li><%= link_to "Contact", contact_path, class: ("active" if action?("contact")) %></li>
       </ul>
     </div>
 
-    <div id='main'>
+    <div id="main">
       <%= yield %>
     </div>
   </div>
-
-  <%= javascript_include_tag "application" %>
-
 </body>
 </html>

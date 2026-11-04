@@ -1,38 +1,18 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Project, :type => :model do
-
-  let(:project) { build(:project) } 
-
-  it 'should create a project' do
-    project.save
-    expect(Project.count).to eq(1)
+RSpec.describe Project, type: :model do
+  it "is valid with the required attributes" do
+    expect(build(:project)).to be_valid
   end
 
-  it 'must have a name' do
-    project.name = ''
-    expect(project).not_to be_valid  
+  %i[name position description site_url].each do |attr|
+    it "requires #{attr}" do
+      expect(build(:project, attr => nil)).not_to be_valid
+    end
   end
 
-  it 'can have no image' do
-    project.image_url = nil
-    expect(project).to be_valid
-  end
-
-  it 'must have a description' do
-    project.description = ''
-    expect(project).not_to be_valid
-  end
-
-  it 'can edit a project' do
-    project.update(:name => 'New Name')
-    project.save
-    expect(project.name).to eq('New Name')
-  end
-
-  it 'should delete a project' do
-    project.save
-    project.delete
-    expect(Project.count).to eq(0)
+  it "knows whether it has an image" do
+    expect(build(:project, image_url: "projects/handy.png")).to have_image
+    expect(build(:project, image_url: nil)).not_to have_image
   end
 end

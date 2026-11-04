@@ -1,33 +1,26 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Post, :type => :model do
-
-  let(:post) { build(:post) }
-
-  it 'should create a post' do
-    post.save
-    expect(Post.count).to eq(1)
+RSpec.describe Post, type: :model do
+  it "is valid with a title and content" do
+    expect(build(:post)).to be_valid
   end
 
-  it 'should not save without a title' do
-    post.title = ''
-    expect(post).not_to be_valid
+  it "requires a title" do
+    expect(build(:post, title: "")).not_to be_valid
   end
 
-  it 'should not save without content' do
-    post.content = ''
-    expect(post).not_to be_valid
+  it "requires content" do
+    expect(build(:post, content: "")).not_to be_valid
   end
 
-  it 'should edit a post' do
-    post.update(:title => 'New Title')
-    post.save
-    expect(post.title).to eq('New Title')
+  it "generates a slug from the title and uses it as the URL param" do
+    post = create(:post, title: "Hello World!")
+    expect(post.slug).to eq("hello-world")
+    expect(post.to_param).to eq("hello-world")
   end
 
-  it 'should delete a post' do
-    post.save
-    post.delete
-    expect(Post.count).to eq(0)
+  it "requires a unique slug" do
+    create(:post, title: "Same Title")
+    expect(build(:post, title: "Same Title")).not_to be_valid
   end
 end

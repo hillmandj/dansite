@@ -1,0 +1,379 @@
+/* Legacy site styles, compiled once from the original Sass (see git history for the .sass sources). */
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.black {
+  color: #000;
+}
+
+.white {
+  color: #fff;
+}
+
+html, body {
+  height: 100%;
+}
+
+.wf-loading {
+  visibility: hidden;
+}
+
+#content {
+  width: 75%;
+  max-width: 1000px;
+  margin: 50px auto;
+  border-top: 5px solid #000;
+  border-bottom: 5px solid #000;
+  font-family: "Lato", sans-serif;
+}
+
+#main {
+  padding: 20px 0px;
+}
+
+#masthead {
+  height: 40px;
+  font-size: 25px;
+  font-weight: bold;
+}
+#masthead #name {
+  line-height: 40px;
+}
+#masthead #name a {
+  color: #000;
+  text-decoration: none;
+}
+#masthead #icon {
+  line-height: 40px;
+}
+
+#navigation {
+  height: 30px;
+  border-bottom: 1px solid #d3d3d3;
+  font-size: 15px;
+  font-weight: bold;
+}
+#navigation ul {
+  margin: 0px;
+  padding: 0px;
+}
+#navigation ul li {
+  margin-right: 15px;
+  line-height: 30px;
+  list-style-type: none;
+  float: left;
+}
+#navigation ul li a {
+  text-decoration: none;
+  color: #717171;
+}
+#navigation ul li a.active {
+  color: #e69500;
+}
+#navigation ul li a:hover {
+  color: #b6b6b6;
+  transition: 1s;
+}
+
+.posts h2,
+.drafts h2,
+.registrations h2,
+.sessions h2,
+.passwords h2,
+.confirmations h2,
+.unlocks h2 {
+  font-weight: bold;
+  display: inline;
+}
+.posts form,
+.drafts form,
+.registrations form,
+.sessions form,
+.passwords form,
+.confirmations form,
+.unlocks form {
+  margin-top: 20px;
+  width: 300px;
+}
+
+@media only screen and (max-width: 320px) {
+  #content {
+    width: 300px;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  #content {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 480px) and (max-width: 600px) {
+  #content {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 801px) {
+  #content {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 801px) and (max-width: 900px) {
+  #content {
+    width: 80%;
+  }
+}
+.pages.about #banner {
+  margin: 0px 0px 20px 0px;
+  font-size: 35px;
+  font-family: "Droid Serif", sans-serif;
+  font-weight: bold;
+  color: #56524d;
+}
+.pages.about #banner span#page-title {
+  color: #11bce4;
+}
+.pages.about #banner span#dan-is {
+  color: #e69500;
+}
+.pages.about #about-me {
+  font-family: "Roboto";
+  font-size: 17px;
+}
+
+.pages.contact #banner {
+  margin: 0px 0px 20px 0px;
+  font-size: 35px;
+  font-family: "Droid Serif", sans-serif;
+  font-weight: bold;
+}
+.pages.contact #banner span.bracket {
+  color: #56524d;
+}
+.pages.contact #banner span#page-title {
+  color: #11bce4;
+}
+.pages.contact #banner span#dan-is {
+  color: #e69500;
+}
+.pages.contact #contact-list {
+  margin-top: 20px;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+}
+.pages.contact #contact-list div.row {
+  margin: 10px 0px 0px 0px;
+}
+.pages.contact #contact-list dt, .pages.contact #contact-list dd {
+  display: inline-block;
+}
+.pages.contact #contact-list dt {
+  width: 130px;
+  font-weight: bold;
+}
+.pages.contact #contact-list dd {
+  margin: 0px;
+}
+
+.pages.work #banner {
+  margin-top: 0px;
+  font-family: "Droid Serif", sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+  color: #56524d;
+}
+.pages.work #banner span#sites {
+  color: #11bce4;
+}
+.pages.work #banner span#projects {
+  color: #e69500;
+}
+.pages.work #intro {
+  margin: 20px 0px;
+  font-size: 20px;
+}
+.pages.work #work-list {
+  padding: 0px;
+  font-size: 18px;
+}
+.pages.work #work-list h3.name {
+  margin: 0px auto 15px auto;
+  font-weight: bold;
+  text-align: center;
+}
+.pages.work #work-list li {
+  list-style-type: none;
+}
+.pages.work #work-list li .image-wrapper img {
+  margin: 30px auto;
+  width: 65%;
+}
+.pages.work #work-list li .image-wrapper img:hover {
+  opacity: 0.85;
+}
+.pages.work #work-list li .description {
+  margin: 0px 0px 30px 0px;
+}
+
+@media only screen and (max-width: 752px) {
+  .pages.about #banner {
+    text-align: center;
+  }
+  .pages.about #about-me {
+    font-size: 14px;
+  }
+  .pages.contact #banner {
+    text-align: center;
+  }
+  .pages.contact #contact-list {
+    font-size: 16px;
+  }
+  .pages.contact #contact-list dt {
+    width: 90px;
+  }
+  .pages.work {
+    text-align: center;
+  }
+  .pages.work #intro {
+    font-size: 16px;
+  }
+  .pages.work #work-list {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 752px) {
+  .pages.contact #contact-list dt {
+    width: 120px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .pages.about #banner, .pages.work #banner, .pages.contact #banner {
+    font-size: 30px;
+  }
+  .pages.contact #contact-list {
+    font-size: 11px;
+  }
+}
+#blog-content {
+  margin: 50px auto;
+  height: 100%;
+  width: 720px;
+  font-family: "Lato", sans-serif;
+}
+
+#sidebar {
+  width: 120px;
+  font-family: "Rokkitt";
+  font-size: 18px;
+}
+
+#sidebar-brand {
+  font-size: 19px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+#sidebar-brand #first-name, #sidebar-brand #last-name {
+  display: block;
+}
+
+#sidebar-nav {
+  padding: 0px;
+  list-style-type: none;
+}
+#sidebar-nav #foreign-links {
+  margin: 7px 0px;
+}
+#sidebar-nav #foreign-links a {
+  margin-right: 2px;
+  color: #000;
+}
+#sidebar-nav #foreign-links a:hover {
+  color: #428bca;
+}
+
+#user-nav {
+  font-family: "Rokkitt";
+  font-size: 18px;
+}
+
+#blog-main {
+  width: 600px;
+}
+#blog-main #blog-masthead {
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 0px;
+}
+#blog-main #blog-posts {
+  margin-top: 20px;
+  font-family: "Droid Serif", sans-serif;
+  font-weight: bold;
+  border-left: 1px solid #428bca;
+  border-right: 1px solid #428bca;
+}
+#blog-main #blog-posts td {
+  border: none;
+}
+#blog-main #blog-posts td.edit-post, #blog-main #blog-posts td.delete-post {
+  width: 31px;
+}
+
+.posts.new h1,
+.posts.edit h1,
+.posts.show h1,
+.drafts.edit h1,
+.drafts.show h1 {
+  margin-top: 0px;
+  font-weight: bold;
+}
+.posts.new .post-date,
+.posts.edit .post-date,
+.posts.show .post-date,
+.drafts.edit .post-date,
+.drafts.show .post-date {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #7a7a7a;
+}
+.posts.new .post-content,
+.posts.edit .post-content,
+.posts.show .post-content,
+.drafts.edit .post-content,
+.drafts.show .post-content {
+  font-size: 18px;
+}
+
+.posts.new form,
+.posts.edit form,
+.drafts.new form,
+.drafts.edit form {
+  width: 100%;
+}
+.posts.new form textarea,
+.posts.edit form textarea,
+.drafts.new form textarea,
+.drafts.edit form textarea {
+  min-height: 200px;
+}
+.posts.new #preview-content,
+.posts.edit #preview-content,
+.drafts.new #preview-content,
+.drafts.edit #preview-content {
+  margin-bottom: 15px;
+}
+
+/* Logout is a form button (DELETE request) styled to look like the other sidebar links. */
+.logout-form {
+  display: inline;
+}
+.logout-button.btn-link {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  vertical-align: baseline;
+}

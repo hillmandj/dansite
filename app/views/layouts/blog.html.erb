@@ -1,49 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <%= google_webfonts_init({google: ['Droid Serif', 'Roboto', 'Rokkitt','Open Sans', 'Raleway', 'Lato']}) %>
-  <%= favicon_link_tag 'icons/danicon-32x32.png', :rel => 'icon', :sizes => '32x32', :type => 'image/png' %>
-  <%= favicon_link_tag 'icons/danicon-96x96.png', :rel => 'icon', :sizes => '96x96', :type => 'image/png' %>
-  <%= favicon_link_tag 'icons/danicon-16x16.png', :rel => 'icon', :sizes => '16x16', :type => 'image/png' %>
-  <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <title>Daniel Hillman</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= render "shared/head", icon_prefix: "danicon" %>
+  <%= javascript_include_tag "blog", defer: true %>
 </head>
 <body class="<%= controller_name %> <%= action_name %>">
- <div id='blog-content'>
-  <div id='sidebar' class='pull-left'>
-    <div id='sidebar-brand'>
-        <a href=<%= root_url %>><span id='first-name'>Daniel</span><span id='last-name'> Hillman</span></a>
-    </div>
-    <ul id='sidebar-nav'>
-      <li id='foreign-links'>
-        <a href='http://github.com/hillmandj' target='_blank'><i class='fa fa-github'></i></a>
-        <a href='http://facebook.com/hillmandj' target='_blank'><i class='fa fa-facebook'></i></a>
-        <a href='http://linkedin.com/in/hillmandj' target='_blank'><i class='fa fa-linkedin'></i></a>
-      </li>
-      <li><a href=<%= posts_path %>>Posts</a></li>
-      <li><a href=<%= about_url %>>About</a></li>
-      <li>
+  <div id="blog-content">
+    <div id="sidebar" class="pull-left">
+      <div id="sidebar-brand">
+        <%= link_to root_path do %><span id="first-name">Daniel</span><span id="last-name"> Hillman</span><% end %>
+      </div>
+      <ul id="sidebar-nav">
+        <li id="foreign-links">
+          <a href="https://github.com/hillmandj" target="_blank" rel="noopener"><i class="fa fa-github"></i></a>
+          <a href="https://facebook.com/hillmandj" target="_blank" rel="noopener"><i class="fa fa-facebook"></i></a>
+          <a href="https://linkedin.com/in/hillmandj" target="_blank" rel="noopener"><i class="fa fa-linkedin"></i></a>
+        </li>
+        <li><%= link_to "Posts", posts_path %></li>
+        <li><%= link_to "About", about_path %></li>
+        <li>
           <% if user_signed_in? %>
-            <%= link_to '#', id: 'drafts-link' do %>
-              Drafts (<span id='drafts-count'><%= @draft_count %></span>)
+            <%= link_to drafts_path, id: "drafts-link", class: ("bold" if Draft.exists? && controller_name != "drafts") do %>
+              Drafts (<span id="drafts-count"><%= Draft.count %></span>)
             <% end %>
-            <br/>
-            <%= link_to 'Settings', edit_user_registration_path %>
-            <br/>
-            <%= link_to 'Logout', destroy_user_session_path, :method => :delete %>
+            <br>
+            <%= link_to "Settings", edit_user_registration_path %>
+            <br>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-link logout-button", form_class: "logout-form" %>
           <% else %>
-            <%= link_to 'Login', new_user_session_path %>
+            <%= link_to "Login", new_user_session_path %>
           <% end %>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
+    <div id="blog-main" class="pull-left">
+      <% flash.each do |type, message| %>
+        <div class="alert <%= type.to_s.in?(%w[alert error]) ? "alert-danger" : "alert-info" %>"><%= message %></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </div>
-  <div id='blog-main' class='pull-left'>
-    <%= yield %>
-  </div>
-</div>
 </body>
 </html>
-

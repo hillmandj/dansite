@@ -1,0 +1,56 @@
+# Kamal deploy configuration: https://kamal-deploy.org
+# Deploys the app container to the DigitalOcean droplet described in infra/README.md.
+#
+#   bin/kamal setup     # first deploy: installs kamal-proxy and boots the app
+#   bin/kamal deploy    # subsequent deploys
+#   bin/kamal console   # rails console in production
+#   bin/kamal logs
+
+service: dansite
+
+image: hillmandj/dansite
+
+servers:
+  web:
+    - 152.42.155.192   # reserved IP of the `dansite` droplet
+
+# kamal-proxy sits in front of the app, gets Let's Encrypt certificates for each
+# host, and switches traffic to a new container only after it passes /up.
+# Before cutover, only the test host points at the new droplet. At cutover, add
+# daniel-hillman.com and www.daniel-hillman.com (see infra/README.md).
+proxy:
+  ssl: true
+  hosts:
+    - new.daniel-hillman.com
+  app_port: 80
+  healthcheck:
+    path: /up
+
+registry:
+  server: ghcr.io
+  username: hillmandj
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  secret:
+    - RAILS_MASTER_KEY
+
+ssh:
+  user: deploy
+
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
+
+# The SQLite database lives in storage/, which is a named Docker volume on the
+# droplet so it survives deploys.
+volumes:
+  - "dansite_storage:/rails/storage"
+
+asset_path: /rails/public/assets
+
+builder:
+  arch: amd64
