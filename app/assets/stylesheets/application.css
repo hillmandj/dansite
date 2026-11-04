@@ -366,14 +366,28 @@ html, body {
   margin-bottom: 15px;
 }
 
-/* Logout is a form button (DELETE request) styled to look like the other sidebar links. */
-.logout-form {
+/*
+ * Logout and delete are small DELETE forms (button_to) styled as links. The legacy
+ * `.posts form { width: 300px }` rule is meant for the editor form, so these
+ * one-button forms opt out of it (the id selector outranks the legacy rule).
+ */
+#blog-content form.button_to,
+#blog-content form.logout-form {
   display: inline;
+  width: auto;
+  margin: 0;
 }
-.logout-button.btn-link {
+#blog-content .logout-button.btn-link,
+#blog-content .delete-button.btn-link {
   padding: 0;
   border: 0;
-  color: inherit;
   font: inherit;
+  line-height: inherit;
   vertical-align: baseline;
+}
+#blog-content .logout-button.btn-link {
+  color: #337ab7;
+}
+#blog-content .logout-button.btn-link:hover {
+  color: #23527c;
 }
