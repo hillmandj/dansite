@@ -16,12 +16,13 @@ servers:
 
 # kamal-proxy sits in front of the app, gets Let's Encrypt certificates for each
 # host, and switches traffic to a new container only after it passes /up.
-# Before cutover, only the test host points at the new droplet. At cutover, add
-# daniel-hillman.com and www.daniel-hillman.com (see infra/README.md).
+# www redirects to the bare domain inside the app (config/routes.rb).
 proxy:
   ssl: true
   hosts:
-    - new.daniel-hillman.com
+    - daniel-hillman.com
+    - www.daniel-hillman.com
+    - new.daniel-hillman.com   # pre-cutover test host; remove when decommissioning the legacy droplet
   app_port: 80
   healthcheck:
     path: /up
