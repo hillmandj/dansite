@@ -71,7 +71,8 @@ doctl compute domain records create daniel-hillman.com \
 ### 3. Restore the database into the app volume
 
 Take a fresh copy from the legacy droplet, then copy it into the Docker volume. The app
-runs as uid 1000.
+runs as uid 1000 and must own the volume directory as well as the file, because SQLite
+writes journal files next to the database.
 
 ```bash
 scp digitalocean:dansite/db/production.sqlite3 ~/dansite-backups/cutover.sqlite3
@@ -79,7 +80,7 @@ scp ~/dansite-backups/cutover.sqlite3 deploy@152.42.155.192:/tmp/production.sqli
 ssh deploy@152.42.155.192 '
   docker volume create dansite_storage &&
   docker run --rm -v dansite_storage:/data -v /tmp/production.sqlite3:/src.sqlite3:ro \
-    alpine sh -c "cp /src.sqlite3 /data/production.sqlite3 && chown 1000:1000 /data/production.sqlite3" &&
+    alpine sh -c "cp /src.sqlite3 /data/production.sqlite3 && chown -R 1000:1000 /data" &&
   rm /tmp/production.sqlite3'
 ```
 
