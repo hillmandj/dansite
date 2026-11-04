@@ -1,89 +1,34 @@
-Dansite::Application.routes.draw do
-  devise_for :users, :skip => :registration
-  as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+Rails.application.routes.draw do
+  # Health check used by Kamal to decide whether a new container is ready.
+  get "up" => "rails/health#show", as: :rails_health_check
+
+  # Send www.daniel-hillman.com to the bare domain, keeping the path.
+  constraints(host: /\Awww\./) do
+    get "(*path)", to: redirect(status: 301) { |_params, request|
+      "#{request.protocol}#{request.host.delete_prefix('www.')}#{request.fullpath}"
+    }
   end
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-  #
-  # You can have the root of your site routed with "root"
-  root 'pages#about'
+  devise_for :users, skip: :registration
+  as :user do
+    get "users/edit" => "devise/registrations#edit", as: :edit_user_registration
+    put "users" => "devise/registrations#update", as: :user_registration
+  end
 
-  get 'work' => 'pages#work'
-  get 'about' => 'pages#about'
-  get 'contact' => 'pages#contact'
-  get 'draft_count' => 'drafts#draft_count'
+  root "pages#about"
 
-  resources :posts, :path => 'blog' do
+  get "work" => "pages#work"
+  get "about" => "pages#about"
+  get "contact" => "pages#contact"
+  get "draft_count" => "drafts#draft_count"
 
-    collection do
-      post 'preview'
-    end
-
-    member do
-      post 'preview'
-    end
+  resources :posts, path: "blog" do
+    collection { post "preview" }
+    member { post "preview" }
   end
 
   resources :drafts do
-
-    collection do
-      post 'preview'
-    end
-
-    member do
-      post 'preview'
-    end
+    collection { post "preview" }
+    member { post "preview" }
   end
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

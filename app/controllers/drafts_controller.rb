@@ -1,69 +1,76 @@
 class DraftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_draft, except: [:index, :preview, :new, :create, :draft_count]
-  layout 'blog'
+  before_action :set_draft, only: [ :show, :edit, :update, :destroy ]
+  layout "blog"
 
   def index
-    @drafts = Draft.all.order('created_at DESC')
+    @drafts = Draft.order(created_at: :desc)
   end
 
   def show
+    redirect_to edit_draft_path(@draft)
   end
 
   def preview
-    draft_data = {
-      preview_title: params['title'],
-      preview_content: RedCloth.new(params['content']).to_html
+    render json: {
+      preview_title: params[:title],
+      preview_content: helpers.render_textile(params[:content])
     }
-    render json: draft_data
-  end
-
-  def edit
-  end
-
-  def update
-    if @draft.update(draft_params)
-      if params['update_draft']
-        redirect_to drafts_path, notice: 'Draft Updated'
-      elsif params['create_post']
-        @post = Post.create(title: @draft.title, content: @draft.content)
-        @draft.destroy!
-        redirect_to posts_path
-      end
-    else
-      flash[:error] = 'Draft failed to update'
-    end
   end
 
   def new
     @draft = Draft.new
   end
 
+  def edit
+  end
+
   def create
     @draft = Draft.new(draft_params)
 
-    if params['create_post']
-      @post = Post.create(title: @draft.title, content: @draft.content)
-      redirect_to @post, notice: 'Post created'
-    elsif @draft.save!
-      redirect_to posts_path, notice: 'Draft saved'
+    if params[:create_post]
+      publish(@draft)
+    elsif @draft.save
+      redirect_to posts_path, notice: "Draft saved"
     else
-      flash[:error] = 'Draft failed to save'
-      render 'posts/new'
+      render :new, status: :unprocessable_content
+    end
+  end
+
+  def update
+    @draft.assign_attributes(draft_params)
+
+    if params[:create_post]
+      publish(@draft)
+    elsif @draft.save
+      redirect_to drafts_path, notice: "Draft updated"
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
     @draft.destroy
-    redirect_to drafts_path, notice: 'Draft deleted'
+    redirect_to drafts_path, notice: "Draft deleted", status: :see_other
   end
 
   def draft_count
-    count = Draft.all.count
-    render json: { draft_count: count }
+    render json: { draft_count: Draft.count }
   end
 
   private
+
+  # Turn a draft into a published post, removing the draft once the post saves.
+  def publish(draft)
+    @post = Post.new(title: draft.title, content: draft.content)
+    if @post.save
+      draft.destroy if draft.persisted?
+      redirect_to @post, notice: "Post created"
+    else
+      flash.now[:error] = @post.errors.full_messages.to_sentence
+      render(draft.persisted? ? :edit : :new, status: :unprocessable_content)
+    end
+  end
 
   def set_draft
     @draft = Draft.find(params[:id])

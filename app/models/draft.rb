@@ -1,3 +1,3 @@
-class Draft < ActiveRecord::Base
+class Draft < ApplicationRecord
   validates :title, :content, presence: true
 end

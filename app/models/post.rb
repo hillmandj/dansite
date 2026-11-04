@@ -1,4 +1,4 @@
-class Post < ActiveRecord::Base
+class Post < ApplicationRecord
   validates :title, :content, presence: true
   validates :slug, presence: true, uniqueness: true
 
@@ -11,6 +11,6 @@ class Post < ActiveRecord::Base
   private
 
   def generate_slug
-    self.slug ||= title.parameterize
+    self.slug ||= title&.parameterize
   end
 end

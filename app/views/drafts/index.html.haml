@@ -7,7 +7,7 @@
           %td.post-title.pull-left=link_to truncate(draft.title, length: 50), edit_draft_path(draft.id)
           %td.post-date.pull-right=draft.created_at.strftime("%B %d, %Y")
           %td.delete-post
-            =link_to draft_path(draft.id), method: :delete, data: { confirm: 'Are you sure?' } do
+            = button_to draft_path(draft.id), method: :delete, class: 'btn btn-link delete-button', form: { data: { confirm: 'Are you sure?' } } do
               %i.fa.fa-remove
     - else
       %h3 No drafts

@@ -1,0 +1,69 @@
+#cloud-config
+# First-boot setup for the dansite droplet (Ubuntu 26.04 LTS).
+# Used as --user-data-file when creating the droplet; see infra/README.md.
+#
+# Result:
+#   - `dan`    : admin user, passwordless sudo, SSH key only
+#   - `deploy` : Kamal deploy user, member of `docker`, no sudo
+#   - root SSH login and password auth disabled
+#   - Docker Engine installed, container logs rotated
+#   - 1GB swap, unattended security upgrades with automatic reboot
+
+groups:
+  - docker
+
+users:
+  - name: dan
+    shell: /bin/bash
+    groups: [sudo]
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1Zc2DItF0ZbZttHG/BbEEjCV6WAujS60Rd9d1Ok0PQ hillmandj@gmail.com
+  - name: deploy
+    shell: /bin/bash
+    groups: [docker]
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1Zc2DItF0ZbZttHG/BbEEjCV6WAujS60Rd9d1Ok0PQ hillmandj@gmail.com
+
+package_update: true
+package_upgrade: true
+packages:
+  - ca-certificates
+  - curl
+  - sqlite3
+  - unattended-upgrades
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-dansite.conf
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      AllowUsers dan deploy
+  - path: /etc/docker/daemon.json
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": { "max-size": "10m", "max-file": "3" }
+      }
+  - path: /etc/apt/apt.conf.d/52dansite-unattended
+    content: |
+      Unattended-Upgrade::Automatic-Reboot "true";
+      Unattended-Upgrade::Automatic-Reboot-Time "09:00";
+
+runcmd:
+  # Swap: 1GB RAM is enough to run the app, swap is a safety net.
+  - fallocate -l 1G /swapfile
+  - chmod 600 /swapfile
+  - mkswap /swapfile
+  - swapon /swapfile
+  - echo '/swapfile none swap sw 0 0' >> /etc/fstab
+  - sysctl -w vm.swappiness=10
+  - echo 'vm.swappiness=10' > /etc/sysctl.d/99-swappiness.conf
+  # Docker Engine from Docker's official repository.
+  - curl -fsSL https://get.docker.com | sh
+  - usermod -aG docker deploy
+  - systemctl enable --now docker
+  - systemctl restart ssh
