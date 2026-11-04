@@ -12,10 +12,6 @@ name: Deploy
 # and add `if: github.event.workflow_run.conclusion == 'success'` to the job.
 on:
   workflow_dispatch:
-  # TEMPORARY: deploy pre-cutover builds of the modernize branch to the new droplet
-  # (served only at new.daniel-hillman.com). Remove this trigger when PR #15 is merged.
-  push:
-    branches: [modernize]
 
 concurrency:
   group: deploy
