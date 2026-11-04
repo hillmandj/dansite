@@ -105,6 +105,9 @@ In `config/deploy.yml`, set `proxy.hosts` to:
 Deploy again. kamal-proxy requests a Let's Encrypt certificate for each host on its first
 HTTPS request, so it's fine that DNS still points at the legacy droplet.
 
+Before merging PR #15, remove the temporary `push: branches: [modernize]` trigger from
+`.github/workflows/deploy.yml`.
+
 ### 6. Switch DNS
 
 ```bash
