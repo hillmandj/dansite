@@ -9,10 +9,9 @@ Rails.application.routes.draw do
     }
   end
 
-  devise_for :users, skip: :registration
-  as :user do
-    get "users/edit" => "devise/registrations#edit", as: :edit_user_registration
-    put "users" => "devise/registrations#update", as: :user_registration
+  devise_for :users, skip: :registrations, controllers: { sessions: "users/sessions" }
+  devise_scope :user do
+    get "login", to: "users/sessions#new"
   end
 
   root "pages#home"
@@ -21,15 +20,14 @@ Rails.application.routes.draw do
   get "about", to: redirect("/", status: 301)
   get "work", to: redirect("/#work", status: 301)
   get "contact", to: redirect("/#contact", status: 301)
-  get "draft_count" => "drafts#draft_count"
 
-  resources :posts, path: "blog" do
-    collection { post "preview" }
-    member { post "preview" }
-  end
+  resources :posts, path: "blog", only: %i[index show]
 
-  resources :drafts do
-    collection { post "preview" }
-    member { post "preview" }
+  namespace :admin do
+    root "posts#index"
+    resources :posts, except: :show
+    post "preview", to: "posts#preview"
+    resource :settings, only: :update
+    resource :account, only: %i[edit update]
   end
 end

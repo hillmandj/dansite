@@ -5,6 +5,9 @@ class InertiaController < ApplicationController
 
   layout "inertia"
 
+  # Every page knows whether the admin is signed in (to show the admin bar).
+  inertia_share admin: -> { user_signed_in? }
+
   private
 
   # Title, description and Open Graph tags, rendered on the server so link

@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* Scan every frontend file for class names (also files added while the dev server runs). */
+@source "../";
+
 /* Dark mode follows the data-theme attribute on <html> (set before paint in the layout). */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
