@@ -1,0 +1,10 @@
+<%# Google Analytics 4. Production only; skipped for the signed-in admin so your own visits aren't counted. %>
+<% if Rails.env.production? && !user_signed_in? %>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RT6CVXVLSZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RT6CVXVLSZ');
+</script>
+<% end %>
