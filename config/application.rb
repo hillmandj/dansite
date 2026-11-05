@@ -35,11 +35,8 @@ module Dansite
     #
     config.time_zone = "Eastern Time (US & Canada)"
 
-    # Devise pages share the blog layout.
-    config.to_prepare do
-      Devise::SessionsController.layout "blog"
-      Devise::RegistrationsController.layout "blog"
-    end
+    # Render error pages (the 404) through the app's own routes.
+    config.exceptions_app = routes
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.

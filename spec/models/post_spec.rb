@@ -23,4 +23,27 @@ RSpec.describe Post, type: :model do
     create(:post, title: "Same Title")
     expect(build(:post, title: "Same Title")).not_to be_valid
   end
+
+  describe "publishing" do
+    it "treats posts without published_at, or scheduled in the future, as unpublished" do
+      live = create(:post, published_at: 1.hour.ago)
+      draft = create(:post, :draft)
+      scheduled = create(:post, published_at: 1.day.from_now)
+
+      expect(described_class.published).to contain_exactly(live)
+      expect(described_class.drafts).to contain_exactly(draft)
+      expect([ live, draft, scheduled ].map(&:published?)).to eq([ true, false, false ])
+    end
+  end
+
+  it "estimates reading time, at least one minute" do
+    expect(build(:post, content: "word " * 10).reading_minutes).to eq(1)
+    expect(build(:post, content: "word " * 500).reading_minutes).to eq(3)
+  end
+
+  it "builds a plain-text excerpt" do
+    post = build(:post, content: "First **paragraph** here.\n\n" + ("more " * 100))
+    expect(post.excerpt).to start_with("First paragraph here. more")
+    expect(post.excerpt.length).to be <= 160
+  end
 end

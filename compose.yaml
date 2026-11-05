@@ -2,22 +2,44 @@
 #   docker compose up            # http://localhost:3000
 #   docker compose run --rm web bin/rails console
 #   docker compose run --rm web bundle exec rspec
+#
+# Two services share one image and the source tree:
+#   web  - Rails (Puma) on :3000
+#   vite - Vite dev server on :3036; Rails proxies asset requests to it,
+#          and the browser connects to it directly for hot reload.
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+    args:
+      UID: ${UID:-1000}
+      GID: ${GID:-1000}
+  volumes:
+    - .:/rails
+    - bundle:/usr/local/bundle
+    - node_modules:/rails/node_modules
+  tty: true
+  stdin_open: true
+
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-      args:
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
+    <<: *app
     command: bash -c "bundle check || bundle install && bin/rails db:prepare && rm -f tmp/pids/server.pid && bin/rails server -b 0.0.0.0"
     ports:
       - "3000:3000"
-    volumes:
-      - .:/rails
-      - bundle:/usr/local/bundle
-    tty: true
-    stdin_open: true
+    environment:
+      VITE_RUBY_HOST: vite
+    depends_on:
+      - vite
+
+  vite:
+    <<: *app
+    command: bash -c "npm install --no-audit --no-fund && bin/vite dev"
+    ports:
+      - "3036:3036"
+    environment:
+      VITE_RUBY_HOST: 0.0.0.0
 
 volumes:
   bundle:
+  node_modules:

@@ -9,26 +9,30 @@ Rails.application.routes.draw do
     }
   end
 
-  devise_for :users, skip: :registration
-  as :user do
-    get "users/edit" => "devise/registrations#edit", as: :edit_user_registration
-    put "users" => "devise/registrations#update", as: :user_registration
+  devise_for :users, skip: :registrations, controllers: { sessions: "users/sessions" }
+  devise_scope :user do
+    get "login", to: "users/sessions#new"
   end
 
-  root "pages#about"
+  root "pages#home"
 
-  get "work" => "pages#work"
-  get "about" => "pages#about"
-  get "contact" => "pages#contact"
-  get "draft_count" => "drafts#draft_count"
+  # Old standalone pages now live as sections of the home page.
+  get "about", to: redirect("/", status: 301)
+  get "work", to: redirect("/#work", status: 301)
+  get "contact", to: redirect("/#contact", status: 301)
 
-  resources :posts, path: "blog" do
-    collection { post "preview" }
-    member { post "preview" }
+  resources :posts, path: "blog", only: %i[index show]
+
+  namespace :admin do
+    root "posts#index"
+    resources :posts, except: :show
+    post "preview", to: "posts#preview"
+    resources :images, only: :create
+    resource :settings, only: :update
+    resource :account, only: %i[edit update]
   end
 
-  resources :drafts do
-    collection { post "preview" }
-    member { post "preview" }
-  end
+  # Everything else is a 404 (also used by exceptions_app for missing records).
+  match "404", to: "errors#not_found", via: :all
+  match "*path", to: "errors#not_found", via: :all
 end

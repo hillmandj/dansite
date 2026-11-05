@@ -50,7 +50,9 @@ aliases:
 volumes:
   - "dansite_storage:/rails/storage"
 
-asset_path: /rails/public/assets
+# Keep the previous release's Vite assets available during a deploy, so pages
+# loaded just before the switch can still fetch their JS/CSS.
+asset_path: /rails/public/vite
 
 builder:
   arch: amd64

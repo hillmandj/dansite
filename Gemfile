@@ -2,8 +2,6 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.4", ">= 8.1.4.1"
-# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
 # Use the Puma web server [https://github.com/puma/puma]
@@ -13,10 +11,17 @@ gem "puma", ">= 5.0"
 gem "devise", "~> 5.0"
 
 # Views are written in Haml
-gem "haml-rails", "~> 3.1"
 
 # Blog posts are written in Textile
-gem "RedCloth", "~> 4.3", require: "redcloth"
+gem "commonmarker", "~> 2.10"
+
+# Blog image uploads go to the dansite-assets S3 bucket
+gem "aws-sdk-s3", "~> 1.238", require: false
+gem "marcel", "~> 1.0" # detects image types from file contents
+
+# Frontend: React pages rendered through Inertia, bundled by Vite
+gem "inertia_rails", "~> 3.23"
+gem "vite_rails", "~> 3.11"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

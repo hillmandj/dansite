@@ -69,3 +69,36 @@ its logs showed only bot traffic. Its final database backup is kept outside the 
 When issuing certificates for a new hostname, wait until all DigitalOcean nameservers
 (`dig @ns1/ns2/ns3.digitalocean.com`) return the new IP before the first HTTPS request:
 Let's Encrypt validates from several locations and allows only 5 failures per hostname per hour.
+
+## Blog image uploads (S3)
+
+Images dropped or pasted into the post editor are uploaded to the existing
+`dansite-assets` bucket (us-east-1) under `blog-images/uploads/YYYY/MM/`, made
+public with a `public-read` ACL, and linked from the post's Markdown. The path
+is fixed when the image is uploaded; posts store the full URL.
+
+The app uses an IAM user that can only write to that prefix:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+    "Resource": "arn:aws:s3:::dansite-assets/blog-images/uploads/*"
+  }]
+}
+```
+
+Its access key is stored in the encrypted Rails credentials (`aws.access_key_id`,
+`aws.secret_access_key`), so production gets it through `RAILS_MASTER_KEY`.
+
+```bash
+docker compose run --rm web bin/rails aws:configure   # prompts for the key; the secret is hidden
+docker compose run --rm web bin/rails aws:check       # uploads a 1px test image and checks it is public
+```
+
+If `aws:check` says the image is not publicly readable, the bucket's Block Public
+Access settings are blocking ACLs. Either allow ACLs for this bucket, or add a
+bucket policy granting `s3:GetObject` on `arn:aws:s3:::dansite-assets/blog-images/*`
+to everyone.
