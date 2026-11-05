@@ -22,7 +22,6 @@ proxy:
   hosts:
     - daniel-hillman.com
     - www.daniel-hillman.com
-    - new.daniel-hillman.com   # pre-cutover test host; remove when decommissioning the legacy droplet
   app_port: 80
   healthcheck:
     path: /up
