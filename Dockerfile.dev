@@ -1,7 +1,17 @@
 # Development image. Source code is bind-mounted, gems live in a named volume.
 # Used by compose.yaml. For the production image, see Dockerfile.
 ARG RUBY_VERSION=4.0.9
+# Keep NODE_VERSION in sync with .node-version
+ARG NODE_VERSION=26.13.0
+FROM docker.io/library/node:$NODE_VERSION-slim AS node
+
 FROM docker.io/library/ruby:$RUBY_VERSION
+
+# Node is only needed for Vite (frontend build + dev server).
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libyaml-dev sqlite3 && \
@@ -11,11 +21,11 @@ RUN apt-get update -qq && \
 ARG UID=1000
 ARG GID=1000
 RUN groupadd --gid $GID app && useradd --uid $UID --gid $GID --create-home app && \
-    mkdir -p /usr/local/bundle && chown app:app /usr/local/bundle
+    mkdir -p /usr/local/bundle /rails/node_modules && chown app:app /usr/local/bundle /rails /rails/node_modules
 USER app
 
 WORKDIR /rails
 ENV BUNDLE_PATH=/usr/local/bundle
 
-EXPOSE 3000
+EXPOSE 3000 3036
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]

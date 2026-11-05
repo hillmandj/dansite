@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "inertia-example", to: "inertia_example#index" # TEMP: scaffold check, removed once real pages exist
   # Health check used by Kamal to decide whether a new container is ready.
   get "up" => "rails/health#show", as: :rails_health_check
 

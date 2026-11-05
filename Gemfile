@@ -18,6 +18,10 @@ gem "haml-rails", "~> 3.1"
 # Blog posts are written in Textile
 gem "RedCloth", "~> 4.3", require: "redcloth"
 
+# Frontend: React pages rendered through Inertia, bundled by Vite
+gem "inertia_rails", "~> 3.23"
+gem "vite_rails", "~> 3.11"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

@@ -30,3 +30,7 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Vite build output and npm packages
+/public/vite*
+/node_modules
+*.local
