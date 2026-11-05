@@ -32,7 +32,10 @@ Rails.application.routes.draw do
     resource :account, only: %i[edit update]
   end
 
-  # Everything else is a 404 (also used by exceptions_app for missing records).
+  # Error pages (config.exceptions_app sends errors here by status code).
   match "404", to: "errors#not_found", via: :all
+  match ":code", to: "errors#show", via: :all, constraints: { code: /[45]\d\d/ }
+
+  # Any other URL is a 404.
   match "*path", to: "errors#not_found", via: :all
 end

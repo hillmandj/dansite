@@ -3,8 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 import SiteLayout from '../../../layouts/SiteLayout'
 import Switch from '../../../components/Switch'
 import { longDate } from '../../../lib/dates'
-
-const csrfToken = () => document.querySelector('meta[name="csrf-token"]')?.content
+import { csrfHeaders } from '../../../lib/csrf'
 
 // Reader widths: the post column is 700px with 24px padding on each side.
 const WIDTHS = { desktop: 700, phone: 390 }
@@ -20,7 +19,7 @@ function usePreview(content) {
       try {
         const response = await fetch('/admin/preview', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-CSRF-Token': csrfToken() },
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json', ...csrfHeaders() },
           body: JSON.stringify({ content }),
           signal: controller.signal,
         })
@@ -40,7 +39,7 @@ async function uploadImage(file) {
   body.append('image', file)
   const response = await fetch('/admin/images', {
     method: 'POST',
-    headers: { Accept: 'application/json', 'X-CSRF-Token': csrfToken() },
+    headers: { Accept: 'application/json', ...csrfHeaders() },
     body,
   })
   const data = await response.json().catch(() => ({}))

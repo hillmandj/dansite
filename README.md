@@ -44,6 +44,9 @@ docker compose run --rm web bin/rails console  # Rails console
 `docker compose up` starts two things: Rails, and Vite, which reloads the page whenever you save a
 frontend file. Log in at http://localhost:3000/login to reach the admin.
 
+If pages come up blank locally (often after switching git branches), Vite restarted itself
+without its Rails settings. Run `docker compose restart vite`.
+
 Your local data lives in `storage/development.sqlite3` and is never committed. To work
 with real content, copy a production backup to that path, then run
 `docker compose run --rm web bin/rails db:environment:set RAILS_ENV=development`.
