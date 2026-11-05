@@ -9,6 +9,8 @@ DigitalOcean server, and HTTPS certificates are renewed automatically. Server de
 
 ## How it fits together
 
+There is a diagram in [docs/architecture.md](docs/architecture.md).
+
 - **Rails** handles URLs, login, the database and saving posts.
 - **React** draws every page. Rails picks the page and hands it the data, using
   [Inertia](https://inertia-rails.dev), so there's no separate API.
