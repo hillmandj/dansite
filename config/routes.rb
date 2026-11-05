@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "inertia-example", to: "inertia_example#index" # TEMP: scaffold check, removed once real pages exist
   # Health check used by Kamal to decide whether a new container is ready.
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -16,11 +15,12 @@ Rails.application.routes.draw do
     put "users" => "devise/registrations#update", as: :user_registration
   end
 
-  root "pages#about"
+  root "pages#home"
 
-  get "work" => "pages#work"
-  get "about" => "pages#about"
-  get "contact" => "pages#contact"
+  # Old standalone pages now live as sections of the home page.
+  get "about", to: redirect("/", status: 301)
+  get "work", to: redirect("/#work", status: 301)
+  get "contact", to: redirect("/#contact", status: 301)
   get "draft_count" => "drafts#draft_count"
 
   resources :posts, path: "blog" do
