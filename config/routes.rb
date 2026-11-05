@@ -31,4 +31,8 @@ Rails.application.routes.draw do
     resource :settings, only: :update
     resource :account, only: %i[edit update]
   end
+
+  # Everything else is a 404 (also used by exceptions_app for missing records).
+  match "404", to: "errors#not_found", via: :all
+  match "*path", to: "errors#not_found", via: :all
 end
