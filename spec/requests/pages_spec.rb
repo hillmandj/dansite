@@ -15,6 +15,18 @@ RSpec.describe "Pages", type: :request do
       expect(inertia.props[:settings]).to eq("show_heatmap" => true, "show_writing" => true)
     end
 
+    it "shows only the newest posts and says when there are more" do
+      7.times { |i| create(:post, title: "Post #{i}", published_at: (10 - i).days.ago) }
+      create(:post, title: "My Top Five Graphic Novels", published_at: 1.year.ago)
+
+      get "/"
+
+      expect(inertia.props[:posts].size).to eq(PagesController::HOME_POSTS)
+      expect(inertia.props[:posts].first[:title]).to eq("Post 6")
+      expect(inertia.props[:more_posts]).to be(true)
+      expect(inertia.props[:hobby_posts]).to eq([ "my-top-five-graphic-novels" ])
+    end
+
     it "includes contribution data when available" do
       allow(GithubContributions).to receive(:current).and_return("days" => [], "total" => 5, "active_days" => 2)
 

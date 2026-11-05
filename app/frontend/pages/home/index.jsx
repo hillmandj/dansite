@@ -61,10 +61,10 @@ function Section({ id, dot, title, children, className = '' }) {
   )
 }
 
-export default function Home({ posts, contributions, settings }) {
+export default function Home({ posts, more_posts: morePosts, hobby_posts: hobbyPosts, contributions, settings }) {
   const postLink = (slug) => `/blog/${slug}`
-  const graphicNovels = posts.find((p) => p.slug === 'my-top-five-graphic-novels')
-  const fantasy = posts.find((p) => p.slug === 'memoirs-of-a-fantasy-champion')
+  const graphicNovels = hobbyPosts.includes('my-top-five-graphic-novels') && { slug: 'my-top-five-graphic-novels' }
+  const fantasy = hobbyPosts.includes('memoirs-of-a-fantasy-champion') && { slug: 'memoirs-of-a-fantasy-champion' }
 
   return (
     <>
@@ -163,6 +163,9 @@ export default function Home({ posts, contributions, settings }) {
         {settings.show_writing && posts.length > 0 && (
           <Section id="writing" dot="amber" title="Writing">
             <PostList posts={posts} />
+            {morePosts && (
+              <Link href="/blog" className="mt-4 inline-block font-mono text-[13px] text-blue hover:underline">All writing →</Link>
+            )}
           </Section>
         )}
 

@@ -13,6 +13,19 @@ RSpec.describe "Posts", type: :request, inertia: true do
     expect(inertia.props[:posts].map { |p| p[:title] }).to eq(%w[Newer Older])
   end
 
+  it "paginates the list, newest first" do
+    stub_const("PostsController::PER_PAGE", 2)
+    5.times { |i| create(:post, title: "Post #{i}", published_at: (10 - i).days.ago) }
+
+    get "/blog", params: { page: 2 }
+    expect(inertia.props[:posts].map { |p| p[:title] }).to eq([ "Post 2", "Post 1" ])
+    expect(inertia.props).to include(page: 2, total_pages: 3)
+
+    get "/blog", params: { page: 99 }
+    expect(inertia.props[:page]).to eq(3)
+    expect(inertia.props[:posts].map { |p| p[:title] }).to eq([ "Post 0" ])
+  end
+
   it "shows a post rendered from Markdown, with its neighbors" do
     create(:post, title: "Before", published_at: 3.days.ago)
     create(:post, title: "Hello World", content: "Some **bold** text", published_at: 2.days.ago)

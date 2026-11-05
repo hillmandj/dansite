@@ -1,8 +1,17 @@
 class PostsController < InertiaController
+  PER_PAGE = 10
+
   def index
-    set_meta(title: "Writing", description: "Posts by Daniel Hillman.", path: posts_path)
+    total_pages = [ (Post.published.count / PER_PAGE.to_f).ceil, 1 ].max
+    page = params[:page].to_i.clamp(1, total_pages)
+    posts = Post.published.newest_first.offset((page - 1) * PER_PAGE).limit(PER_PAGE)
+
+    set_meta(title: page > 1 ? "Writing (page #{page})" : "Writing",
+             description: "Posts by Daniel Hillman.", path: posts_path(page: (page if page > 1)))
     render inertia: "posts/index", props: {
-      posts: Post.published.newest_first.map { |post| post_summary(post) }
+      posts: posts.map { |post| post_summary(post) },
+      page: page,
+      total_pages: total_pages
     }
   end
 
