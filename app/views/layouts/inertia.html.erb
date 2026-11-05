@@ -8,12 +8,11 @@
   <%= csp_meta_tag %>
   <%= inertia_meta_tags %>
   <script>
-    // Apply the saved theme (or the system preference) before first paint.
+    // Dark by default; apply the visitor's saved choice (from the toggle) before first paint.
     (function () {
       var t = null;
       try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      document.documentElement.dataset.theme = t;
+      document.documentElement.dataset.theme = t === "light" ? "light" : "dark";
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
