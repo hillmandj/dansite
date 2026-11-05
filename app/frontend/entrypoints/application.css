@@ -189,10 +189,18 @@
 .post-body img, .post-body video {
   @apply rounded-xl border border-line;
   display: block;
-  width: 100%;
   height: auto;
 }
-.post-body video { background: #000; }
+/* Images never stretch: large ones shrink to the column, small ones keep their size. */
+.post-body img { max-width: 100%; margin-inline: auto; }
+.post-body video { width: 100%; background: #000; }
+
+/* Admin preview only: the size note under each image. */
+.image-note {
+  @apply mt-1.5 text-center font-mono text-green;
+  font-size: 11px;
+}
+.image-note-warn { @apply text-amber; }
 .post-body p:has(> video:only-child) { margin-bottom: 0; }
 
 /* Smooth color change while switching themes (class added briefly by ThemeToggle). */

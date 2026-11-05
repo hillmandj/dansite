@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     root "posts#index"
     resources :posts, except: :show
     post "preview", to: "posts#preview"
+    resources :images, only: :create
     resource :settings, only: :update
     resource :account, only: %i[edit update]
   end
