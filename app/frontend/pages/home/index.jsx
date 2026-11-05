@@ -1,6 +1,7 @@
-import { Head, Link } from '@inertiajs/react'
+import { Link } from '@inertiajs/react'
 import SiteLayout from '../../layouts/SiteLayout'
 import Heatmap from '../../components/Heatmap'
+import PostList from '../../components/PostList'
 import photo from '../../assets/dan.jpg'
 
 const LINKS = {
@@ -67,10 +68,6 @@ export default function Home({ posts, contributions, settings }) {
 
   return (
     <>
-      <Head>
-        <meta name="description" content="Daniel Hillman is a Staff Software Engineer at Zendesk who builds web apps, developer tools and infrastructure." />
-      </Head>
-
       <div className="wrap">
         {/* Intro */}
         <section className="grid grid-cols-[minmax(0,1fr)] items-center gap-7 pt-12 pb-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-14 md:pt-[88px] md:pb-16">
@@ -165,19 +162,7 @@ export default function Home({ posts, contributions, settings }) {
 
         {settings.show_writing && posts.length > 0 && (
           <Section id="writing" dot="amber" title="Writing">
-            <div>
-              {posts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={postLink(post.slug)}
-                  className="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 border-b border-line px-1 py-3.5 transition-[padding] duration-200 hover:pl-2.5 md:grid-cols-[110px_1fr_auto]"
-                >
-                  <span className="col-span-2 font-mono text-xs text-faint md:col-span-1">{post.date}</span>
-                  <span className="font-medium text-head group-hover:text-blue">{post.title}</span>
-                  <span className="hidden text-[13px] text-faint md:inline">→</span>
-                </Link>
-              ))}
-            </div>
+            <PostList posts={posts} />
           </Section>
         )}
 

@@ -7,11 +7,14 @@ RSpec.describe "Admin login", type: :request do
     post "/users/sign_in", params: { user: { email: "admin@example.com", password: "password123" } }
     expect(response).to redirect_to(posts_path)
 
-    get "/blog"
-    expect(response.body).to include("Logout")
+    get "/blog/new"
+    expect(response).to have_http_status(:ok)
 
     delete "/users/sign_out"
     expect(response).to redirect_to(posts_path)
+
+    get "/blog/new"
+    expect(response).to redirect_to(new_user_session_path)
   end
 
   it "rejects a bad password" do

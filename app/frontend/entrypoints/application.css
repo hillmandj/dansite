@@ -166,6 +166,32 @@
   }
 }
 
+/* Blog post body (HTML rendered from Markdown on the server). */
+.post-body { font-size: 18px; line-height: 1.75; overflow-wrap: break-word; }
+.post-body > * + * { margin-top: 22px; }
+.post-body h2 { @apply text-head; font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin-top: 44px; }
+.post-body h3 { @apply text-head; font-size: 20px; font-weight: 600; margin-top: 36px; }
+.post-body h2 + *, .post-body h3 + * { margin-top: 14px; }
+.post-body strong, .post-body em { @apply text-head; }
+.post-body a { @apply text-blue; border-bottom: 1px solid color-mix(in srgb, var(--c-blue) 35%, transparent); }
+.post-body a:hover { @apply border-blue; }
+.post-body ul, .post-body ol { padding-left: 1.4em; }
+.post-body ul { list-style: disc; }
+.post-body ol { list-style: decimal; }
+.post-body li + li { margin-top: 4px; }
+.post-body blockquote { @apply border-l-2 border-line text-muted; padding-left: 18px; }
+.post-body code { @apply rounded bg-panel-2 font-mono; font-size: .85em; padding: 2px 5px; }
+.post-body pre { @apply rounded-xl border border-line bg-panel font-mono; padding: 16px 18px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+.post-body pre code { background: none; padding: 0; }
+.post-body img, .post-body video {
+  @apply rounded-xl border border-line;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.post-body video { background: #000; }
+.post-body p:has(> video:only-child) { margin-bottom: 0; }
+
 /* Smooth color change while switching themes (class added briefly by ThemeToggle). */
 html.theming,
 html.theming *,

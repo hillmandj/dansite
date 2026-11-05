@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2016_06_05_213635) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_230000) do
   create_table "drafts", force: :cascade do |t|
     t.string "title", limit: 255
     t.text "content"
@@ -24,6 +24,9 @@ ActiveRecord::Schema[8.1].define(version: 2016_06_05_213635) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "slug", limit: 255
+    t.datetime "published_at"
+    t.text "content_textile"
+    t.index ["published_at"], name: "index_posts_on_published_at"
     t.index ["slug"], name: "index_posts_on_slug"
   end
 

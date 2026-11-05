@@ -16,7 +16,8 @@ gem "devise", "~> 5.0"
 gem "haml-rails", "~> 3.1"
 
 # Blog posts are written in Textile
-gem "RedCloth", "~> 4.3", require: "redcloth"
+gem "RedCloth", "~> 4.3", require: "redcloth" # legacy posts; removed once converted to Markdown
+gem "commonmarker", "~> 2.10"
 
 # Frontend: React pages rendered through Inertia, bundled by Vite
 gem "inertia_rails", "~> 3.23"

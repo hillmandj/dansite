@@ -7,7 +7,12 @@ FactoryBot.define do
 
   factory :post do
     sequence(:title) { |n| "Post number #{n}" }
-    content { "Some *Textile* content." }
+    content { "Some *Markdown* content." }
+    published_at { 1.day.ago }
+
+    trait :draft do
+      published_at { nil }
+    end
   end
 
   factory :draft do

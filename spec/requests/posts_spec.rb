@@ -3,24 +3,47 @@ require "rails_helper"
 RSpec.describe "Posts", type: :request do
   let(:admin) { create(:user) }
 
-  describe "public pages" do
-    it "lists posts newest first" do
-      create(:post, title: "Older", created_at: 2.days.ago)
-      create(:post, title: "Newer", created_at: 1.day.ago)
+  describe "public pages", inertia: true do
+    it "lists published posts newest first" do
+      create(:post, title: "Older", published_at: 2.days.ago)
+      create(:post, title: "Newer", published_at: 1.day.ago)
+      create(:post, :draft, title: "Unfinished")
 
       get "/blog"
 
       expect(response).to have_http_status(:ok)
-      expect(response.body.index("Newer")).to be < response.body.index("Older")
+      expect(inertia).to render_component("posts/index")
+      expect(inertia.props[:posts].map { |p| p[:title] }).to eq(%w[Newer Older])
     end
 
-    it "shows a post by slug and renders Textile" do
-      create(:post, title: "Hello World", content: "Some *bold* text")
+    it "shows a post rendered from Markdown, with its neighbors" do
+      create(:post, title: "Before", published_at: 3.days.ago)
+      create(:post, title: "Hello World", content: "Some **bold** text", published_at: 2.days.ago)
+      create(:post, title: "After", published_at: 1.day.ago)
 
       get "/blog/hello-world"
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include("<strong>bold</strong>")
+      expect(inertia).to render_component("posts/show")
+      expect(inertia.props[:post]).to include(title: "Hello World", html: "<p>Some <strong>bold</strong> text</p>\n", draft: false)
+      expect(inertia.props[:older]).to eq("title" => "Before", "slug" => "before")
+      expect(inertia.props[:newer]).to eq("title" => "After", "slug" => "after")
+    end
+
+    it "puts the title and description in the server-rendered head for link previews" do
+      create(:post, title: "Hello World", content: "A short first paragraph.")
+
+      get "/blog/hello-world"
+
+      expect(response.body).to include("<title data-inertia=\"title\">Hello World · Daniel Hillman</title>")
+      expect(response.body).to include('content="A short first paragraph."')
+      expect(response.body).to include('property="og:title" content="Hello World"')
+    end
+
+    it "hides drafts from visitors" do
+      create(:post, :draft, title: "Secret")
+      get "/blog/secret"
+      expect(response).to have_http_status(:not_found)
     end
 
     it "returns 404 for an unknown slug" do
@@ -36,6 +59,17 @@ RSpec.describe "Posts", type: :request do
 
   describe "as the admin" do
     before { sign_in admin }
+
+    it "can preview a draft", inertia: true do
+      create(:post, :draft, title: "Secret")
+      get "/blog/secret"
+      expect(inertia.props[:post]).to include(draft: true)
+    end
+
+    it "publishes new posts immediately" do
+      post "/blog", params: { post: { title: "Brand New", content: "Body" } }
+      expect(Post.find_by(slug: "brand-new")).to be_published
+    end
 
     it "creates a post" do
       expect {
@@ -60,9 +94,9 @@ RSpec.describe "Posts", type: :request do
       expect { delete "/blog/#{record.slug}" }.to change(Post, :count).by(-1)
     end
 
-    it "previews Textile as HTML" do
+    it "previews Markdown as HTML" do
       post "/blog/preview", params: { title: "T", content: "_hi_" }, as: :json
-      expect(response.parsed_body).to eq("preview_title" => "T", "preview_content" => "<p><em>hi</em></p>")
+      expect(response.parsed_body).to eq("preview_title" => "T", "preview_content" => "<p><em>hi</em></p>\n")
     end
   end
 end

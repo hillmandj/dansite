@@ -3,8 +3,9 @@ require "rails_helper"
 RSpec.describe "Pages", type: :request do
   describe "home", inertia: true do
     it "renders the home page with posts, newest first" do
-      create(:post, title: "Older", created_at: 2.years.ago)
-      create(:post, title: "Newer", created_at: 1.year.ago)
+      create(:post, title: "Older", published_at: 2.years.ago)
+      create(:post, title: "Newer", published_at: 1.year.ago)
+      create(:post, :draft, title: "Unfinished")
 
       get "/"
 

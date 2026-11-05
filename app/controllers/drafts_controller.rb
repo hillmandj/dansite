@@ -14,7 +14,7 @@ class DraftsController < ApplicationController
   def preview
     render json: {
       preview_title: params[:title],
-      preview_content: helpers.render_textile(params[:content])
+      preview_content: helpers.render_markdown(params[:content])
     }
   end
 
@@ -62,7 +62,7 @@ class DraftsController < ApplicationController
 
   # Turn a draft into a published post, removing the draft once the post saves.
   def publish(draft)
-    @post = Post.new(title: draft.title, content: draft.content)
+    @post = Post.new(title: draft.title, content: draft.content, published_at: Time.current)
     if @post.save
       draft.destroy if draft.persisted?
       redirect_to @post, notice: "Post created"
