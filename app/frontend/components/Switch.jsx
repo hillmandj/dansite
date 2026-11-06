@@ -11,7 +11,7 @@ export default function Switch({ checked, onChange, label, disabled = false }) {
         onChange={(e) => onChange(e.target.checked)}
         className="peer absolute inset-0 z-10 cursor-pointer opacity-0"
       />
-      <span className="absolute inset-0 rounded-full bg-line transition-colors peer-checked:bg-green peer-focus-visible:ring-2 peer-focus-visible:ring-blue" />
+      <span className="absolute inset-0 rounded-full bg-line transition-colors peer-checked:bg-green peer-focus-visible:ring-2 peer-focus-visible:ring-link" />
       <span className="absolute top-[3px] left-[3px] h-4 w-4 rounded-full bg-white shadow transition-transform peer-checked:translate-x-[18px]" />
     </span>
   )

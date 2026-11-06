@@ -11,6 +11,7 @@ class PostsController < InertiaController
     render inertia: "posts/index", props: {
       posts: posts.map { |post| post_summary(post) },
       page: page,
+      per_page: PER_PAGE,
       total_pages: total_pages
     }
   end

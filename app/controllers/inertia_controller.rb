@@ -5,8 +5,9 @@ class InertiaController < ApplicationController
 
   layout "inertia"
 
-  # Every page knows whether the admin is signed in (to show the admin bar).
-  inertia_share admin: -> { user_signed_in? }
+  # Every page knows whether the admin is signed in (to show the admin bar)
+  # and which site theme is active (the layout also writes it onto <html> before paint).
+  inertia_share admin: -> { user_signed_in? }, site_theme: -> { SiteSetting.theme }
 
   private
 

@@ -34,7 +34,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-      className="relative h-9 w-9 overflow-hidden rounded-[9px] border border-line bg-panel text-text transition-colors hover:border-blue hover:text-blue"
+      className="relative h-9 w-9 overflow-hidden rounded-control border border-line bg-panel text-text transition-colors hover:border-link hover:text-link"
     >
       <svg className={icon(theme === 'dark')} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />

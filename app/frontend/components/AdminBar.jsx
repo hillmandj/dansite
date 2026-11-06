@@ -10,11 +10,11 @@ export default function AdminBar() {
       <div className="wrap flex h-9 items-center justify-between gap-4 text-muted">
         <span>signed in as admin</span>
         <span className="flex gap-4">
-          {editing && <Link className="text-blue" href={`/admin/posts/${props.post.slug}/edit`}>edit post</Link>}
-          <Link className="text-blue" href="/">view site</Link>
-          <Link className="text-blue" href="/admin">admin</Link>
-          <Link className="text-blue" href="/admin/account/edit">account</Link>
-          <button type="button" className="cursor-pointer text-blue" onClick={() => router.delete('/users/sign_out')}>log out</button>
+          {editing && <Link className="text-link" href={`/admin/posts/${props.post.slug}/edit`}>edit post</Link>}
+          <Link className="text-link" href="/">view site</Link>
+          <Link className="text-link" href="/admin">admin</Link>
+          <Link className="text-link" href="/admin/account/edit">account</Link>
+          <button type="button" className="cursor-pointer text-link" onClick={() => router.delete('/users/sign_out')}>log out</button>
         </span>
       </div>
     </div>

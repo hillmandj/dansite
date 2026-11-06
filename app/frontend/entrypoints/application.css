@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import './themes.css';
 
 /* Scan every frontend file for class names (also files added while the dev server runs). */
 @source "../";
@@ -7,67 +8,24 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Design tokens. Components use them through Tailwind classes
- * (bg-panel, text-head, border-line, text-green, ...).
+ * term: classes apply only in the terminal-style themes (every theme except Classic),
+ * e.g. "hidden term:inline" shows something only there. classic: is the opposite.
  */
-:root,
-:root[data-theme="dark"] {
-  --c-bg: #0a0f1a;
-  --c-panel: #0e1524;
-  --c-panel-2: #121b2e;
-  --c-line: #1c2740;
-  --c-line-soft: #151e33;
-  --c-text: #b9c6d8;
-  --c-muted: #7586a0;
-  --c-faint: #4d5d78;
-  --c-head: #eef3fa;
-  --c-blue: #5aa5ff;
-  --c-blue-strong: #2f7cf6;
-  --c-indigo: #8b9cff;
-  --c-str: #a9d1ff;
-  --c-green: #3ddc84;
-  --c-violet: #a78bfa;
-  --c-amber: #fbbf24;
-  --c-red: #f2788f;
-  --c-h0: #141c2d;
-  --c-h1: #0e4429;
-  --c-h2: #006d32;
-  --c-h3: #26a641;
-  --c-h4: #39d353;
-  --shadow-panel: 0 1px 0 rgba(255, 255, 255, .02);
-}
+@custom-variant term (&:where(:root:not([data-scheme="classic"]) *));
+@custom-variant classic (&:where(:root[data-scheme="classic"] *));
 
-:root[data-theme="light"] {
-  --c-bg: #f6f8fb;
-  --c-panel: #ffffff;
-  --c-panel-2: #f1f5fb;
-  --c-line: #e1e7f0;
-  --c-line-soft: #ebeff5;
-  --c-text: #3b4a60;
-  --c-muted: #66758c;
-  --c-faint: #9aa7ba;
-  --c-head: #0c1729;
-  --c-blue: #1b6ef3;
-  --c-blue-strong: #1b6ef3;
-  --c-indigo: #5b5bd6;
-  --c-str: #1d58b8;
-  --c-green: #14a05a;
-  --c-violet: #7c5cf0;
-  --c-amber: #d48a06;
-  --c-red: #d63d5c;
-  --c-h0: #e8edf3;
-  --c-h1: #aee9c6;
-  --c-h2: #5fcf8f;
-  --c-h3: #22a35c;
-  --c-h4: #137a42;
-  --shadow-panel: 0 1px 2px rgba(16, 32, 64, .04), 0 4px 16px rgba(16, 32, 64, .04);
-}
-
+/*
+ * Colors, fonts and corner radii come from the active theme (see themes.css).
+ * Components use them through Tailwind classes (bg-panel, text-head, border-line, text-link, ...).
+ */
 @theme inline {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-mono: var(--t-font-code);
+  --font-display: var(--t-font-display);
+  --font-ui: var(--t-font-ui);
 
   --color-bg: var(--c-bg);
+  --color-bg-alt: var(--c-bg-alt);
   --color-panel: var(--c-panel);
   --color-panel-2: var(--c-panel-2);
   --color-line: var(--c-line);
@@ -76,14 +34,19 @@
   --color-muted: var(--c-muted);
   --color-faint: var(--c-faint);
   --color-head: var(--c-head);
-  --color-blue: var(--c-blue);
-  --color-blue-strong: var(--c-blue-strong);
-  --color-indigo: var(--c-indigo);
+  --color-link: var(--c-link);
+  --color-fill: var(--c-fill);
+  --color-on-fill: var(--c-on-fill);
+  --color-hot: var(--c-hot);
+  --color-key: var(--c-key);
   --color-str: var(--c-str);
   --color-green: var(--c-green);
   --color-violet: var(--c-violet);
   --color-amber: var(--c-amber);
   --color-red: var(--c-red);
+
+  --radius-panel: var(--t-radius-panel);
+  --radius-control: var(--t-radius-control);
 
   --shadow-panel: var(--shadow-panel);
 }
@@ -96,28 +59,34 @@
     line-height: 1.65;
   }
   h1, h2, h3 { @apply text-head; }
-  ::selection { background: color-mix(in srgb, var(--c-blue) 30%, transparent); }
+  ::selection { background: color-mix(in srgb, var(--c-link) 30%, transparent); }
 }
 
 @layer components {
   .wrap { @apply mx-auto w-full max-w-[980px] px-6; }
-  .panel { @apply rounded-xl border border-line bg-panel shadow-panel; }
+  .panel { @apply rounded-panel border border-line bg-panel shadow-panel; }
 
   .btn {
-    @apply inline-flex items-center rounded-[9px] border border-line bg-panel px-[18px] py-2.5 text-sm font-medium text-head transition-colors;
+    @apply inline-flex items-center rounded-control border border-line bg-panel px-[18px] py-2.5 font-ui text-sm font-medium text-head transition-colors;
   }
-  .btn:hover { @apply border-blue; }
-  .btn-primary { @apply border-blue-strong bg-blue-strong text-white; }
-  .btn-primary:hover { @apply border-blue-strong; filter: brightness(1.1); }
+  .btn:hover { @apply border-link; }
+  .btn-primary { @apply border-fill bg-fill text-on-fill; }
+  .btn-primary:hover { @apply border-fill; filter: brightness(1.1); }
+  :root:not([data-scheme="classic"]) .btn { @apply px-4 py-[9px]; }
+  :root:not([data-scheme="classic"]) .btn:hover { @apply border-fill text-fill; }
+  :root:not([data-scheme="classic"]) .btn-primary:hover { @apply text-on-fill; }
 
   .link {
-    @apply text-blue;
-    border-bottom: 1px solid color-mix(in srgb, var(--c-blue) 35%, transparent);
+    @apply text-link;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-link) 35%, transparent);
   }
-  .link:hover { @apply border-blue; }
+  .link:hover { @apply border-link; }
 
-  /* Section heading with a small colored marker (color set via --dot). */
-  .section-title { @apply text-2xl font-semibold tracking-tight; }
+  /*
+   * Section heading. Classic: a small colored square (color set via --dot).
+   * Terminal themes: a markdown-style "##" in the accent color.
+   */
+  .section-title { @apply font-display text-2xl font-semibold tracking-tight; }
   .section-title::before {
     content: "";
     display: inline-block;
@@ -126,10 +95,20 @@
     border-radius: 2px;
     margin-right: 10px;
     vertical-align: 3px;
-    background: var(--dot, var(--c-blue));
+    background: var(--dot, var(--c-link));
   }
+  :root:not([data-scheme="classic"]) .section-title { @apply text-xl tracking-normal; }
+  :root:not([data-scheme="classic"]) .section-title::before {
+      content: "##";
+      width: auto;
+      height: auto;
+      margin-right: 12px;
+      vertical-align: baseline;
+      background: none;
+      color: var(--c-hot);
+    }
 
-  /* Round photo with a blue gradient ring, a dashed halo and a soft glow. */
+  /* Round photo. Classic: gradient ring, dashed halo, soft glow. Terminal: one thin accent ring. */
   .photo-ring {
     position: relative;
     width: 112px;
@@ -137,8 +116,8 @@
     flex: none;
     padding: 4px;
     border-radius: 9999px;
-    background: linear-gradient(145deg, var(--c-blue), color-mix(in srgb, var(--c-blue) 35%, var(--c-bg)));
-    box-shadow: 0 10px 40px color-mix(in srgb, var(--c-blue) 14%, transparent);
+    background: linear-gradient(145deg, var(--c-link), color-mix(in srgb, var(--c-link) 35%, var(--c-bg)));
+    box-shadow: 0 10px 40px color-mix(in srgb, var(--c-link) 14%, transparent);
   }
   .photo-ring::before {
     content: "";
@@ -161,39 +140,80 @@
     .photo-ring { width: 200px; height: 200px; }
     .photo-ring::before { inset: -10px; }
   }
+  :root:not([data-scheme="classic"]) .photo-ring { padding: 5px; background: none; box-shadow: none; border: 2px solid var(--c-fill); }
+  :root:not([data-scheme="classic"]) .photo-ring::before { display: none; }
+  :root:not([data-scheme="classic"]) .photo-ring img { border: 0; }
 
-  /* Amber highlighter stroke. */
+  /* "love writing code". Classic: amber highlighter stroke. Terminal: a visual-mode selection. */
   .mark {
     padding: 0 2px;
     background: linear-gradient(transparent 62%, color-mix(in srgb, var(--c-amber) 35%, transparent) 62%);
+  }
+  :root:not([data-scheme="classic"]) .mark {
+      padding: 0;
+      border-radius: 2px;
+      color: var(--c-head);
+      background: color-mix(in srgb, var(--c-fill) 22%, transparent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--c-fill) 22%, transparent);
+    }
+
+  /* Block cursor after "Hi, I'm Dan." (terminal themes only). A soft blink, never a hard flash. */
+  .cursor {
+    display: inline-block;
+    width: .42em;
+    height: .9em;
+    margin-left: .14em;
+    vertical-align: -.06em;
+    border-radius: 1px;
+    background: var(--c-hot);
+    animation: cursor-blink 1.4s ease-in-out infinite;
+  }
+  @keyframes cursor-blink {
+    0%, 45% { opacity: 1; }
+    60%, 90% { opacity: .12; }
+    100% { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { animation: none; }
   }
 }
 
 /* Blog post body (HTML rendered from Markdown on the server). */
 .post-body { font-size: 18px; line-height: 1.75; overflow-wrap: break-word; }
 .post-body > * + * { margin-top: 22px; }
-.post-body h2 { @apply text-head; font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin-top: 44px; }
-.post-body h3 { @apply text-head; font-size: 20px; font-weight: 600; margin-top: 36px; }
+.post-body h2 { @apply text-head font-display; font-size: 24px; font-weight: 600; letter-spacing: -.02em; margin-top: 44px; }
+.post-body h3 { @apply text-head font-display; font-size: 20px; font-weight: 600; margin-top: 36px; }
 .post-body h2 + *, .post-body h3 + * { margin-top: 14px; }
 .post-body strong, .post-body em { @apply text-head; }
-.post-body a { @apply text-blue; border-bottom: 1px solid color-mix(in srgb, var(--c-blue) 35%, transparent); }
-.post-body a:hover { @apply border-blue; }
+.post-body a { @apply text-link; border-bottom: 1px solid color-mix(in srgb, var(--c-link) 35%, transparent); }
+.post-body a:hover { @apply border-link; }
 .post-body ul, .post-body ol { padding-left: 1.4em; }
 .post-body ul { list-style: disc; }
 .post-body ol { list-style: decimal; }
 .post-body li + li { margin-top: 4px; }
 .post-body blockquote { @apply border-l-2 border-line text-muted; padding-left: 18px; }
 .post-body code { @apply rounded bg-panel-2 font-mono; font-size: .85em; padding: 2px 5px; }
-.post-body pre { @apply rounded-xl border border-line bg-panel font-mono; padding: 16px 18px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
+.post-body pre { @apply rounded-panel border border-line bg-panel font-mono; padding: 16px 18px; overflow-x: auto; font-size: 14px; line-height: 1.6; }
 .post-body pre code { background: none; padding: 0; }
 .post-body img, .post-body video {
-  @apply rounded-xl border border-line;
+  @apply rounded-panel border border-line;
   display: block;
   height: auto;
 }
 /* Images never stretch: large ones shrink to the column, small ones keep their size. */
 .post-body img { max-width: 100%; margin-inline: auto; }
 .post-body video { width: 100%; background: #000; }
+
+/* Terminal themes: markdown-flavored headings, dash bullets, an accent bar on quotes. */
+:root:not([data-scheme="classic"]) .post-body h2 { font-size: 22px; letter-spacing: -.01em; }
+:root:not([data-scheme="classic"]) .post-body h3 { font-size: 18px; }
+:root:not([data-scheme="classic"]) .post-body h2::before { content: "## "; color: var(--c-hot); }
+:root:not([data-scheme="classic"]) .post-body h3::before { content: "### "; color: var(--c-hot); }
+:root:not([data-scheme="classic"]) .post-body ul { list-style: none; }
+:root:not([data-scheme="classic"]) .post-body ul > li { position: relative; }
+:root:not([data-scheme="classic"]) .post-body ul > li::before { content: "-"; position: absolute; left: -1.1em; color: var(--c-hot); font-family: var(--t-font-code); }
+:root:not([data-scheme="classic"]) .post-body blockquote { border-left-color: var(--c-violet); font-style: italic; }
+:root:not([data-scheme="classic"]) .post-body pre { background: var(--c-bg-alt); }
 
 /* Admin preview only: the size note under each image. */
 .image-note {
@@ -203,7 +223,7 @@
 .image-note-warn { @apply text-amber; }
 .post-body p:has(> video:only-child) { margin-bottom: 0; }
 
-/* Smooth color change while switching themes (class added briefly by ThemeToggle). */
+/* Smooth color change while switching themes (class added briefly by ThemeToggle and the admin theme picker). */
 html.theming,
 html.theming *,
 html.theming *::before,

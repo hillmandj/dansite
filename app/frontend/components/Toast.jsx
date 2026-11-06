@@ -18,7 +18,7 @@ export default function Toast() {
     <div
       role="status"
       aria-live="polite"
-      className={`fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-[9px] px-4 py-2.5 text-[13px] shadow-lg transition-all duration-300 ${
+      className={`fixed bottom-6 md:bottom-10 left-1/2 z-50 -translate-x-1/2 rounded-control px-4 py-2.5 text-[13px] shadow-lg transition-all duration-300 ${
         flash?.alert ? 'bg-red text-white' : 'bg-head text-bg'
       } ${visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'}`}
     >

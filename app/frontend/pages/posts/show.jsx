@@ -6,7 +6,7 @@ export default function PostShow({ post, older, newer }) {
   return (
     <>
       <article className="mx-auto max-w-[700px] px-6 pt-16 pb-10">
-        <Link href="/blog" className="font-mono text-[13px] text-muted hover:text-blue">← all writing</Link>
+        <Link href="/blog" className="font-mono text-[13px] text-muted hover:text-link">← all writing</Link>
 
         {post.draft && (
           <p className="mt-6 rounded-lg border border-amber/40 bg-amber/10 px-4 py-2.5 font-mono text-[13px] text-amber">
@@ -14,7 +14,7 @@ export default function PostShow({ post, older, newer }) {
           </p>
         )}
 
-        <h1 className="mt-5 mb-3.5 text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold tracking-[-.03em]">{post.title}</h1>
+        <h1 className="mt-5 mb-3.5 font-display text-[clamp(32px,5vw,46px)] leading-[1.1] font-bold tracking-[-.03em] term:text-[clamp(30px,4.6vw,42px)]">{post.title}</h1>
         <div className="flex flex-wrap gap-3.5 font-mono text-[13px] text-faint">
           <span>{longDate(post.date)}</span>
           <span>·</span>
@@ -30,13 +30,13 @@ export default function PostShow({ post, older, newer }) {
           {older ? (
             <Link href={`/blog/${older.slug}`} className="group">
               <span className="block text-xs text-faint">← older</span>
-              <b className="font-medium text-head group-hover:text-blue">{older.title}</b>
+              <b className="font-medium text-head group-hover:text-link">{older.title}</b>
             </Link>
           ) : <span />}
           {newer && (
             <Link href={`/blog/${newer.slug}`} className="group text-right">
               <span className="block text-xs text-faint">newer →</span>
-              <b className="font-medium text-head group-hover:text-blue">{newer.title}</b>
+              <b className="font-medium text-head group-hover:text-link">{newer.title}</b>
             </Link>
           )}
         </nav>
