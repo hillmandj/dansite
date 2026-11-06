@@ -88,7 +88,7 @@ function Preview({ title, html, width, framed }) {
   const today = new Date().toISOString().slice(0, 10)
   return (
     <div
-      className={framed ? 'mx-auto overflow-hidden rounded-xl border border-line bg-bg' : ''}
+      className={framed ? 'mx-auto overflow-hidden rounded-panel border border-line bg-bg' : ''}
       style={framed ? { width: WIDTHS[width], maxWidth: '100%' } : undefined}
     >
       <div className="px-6 pt-8 pb-10">
@@ -207,7 +207,7 @@ export default function PostForm({ post }) {
     >
       <div className="flex items-center justify-between gap-3 border-b border-line-soft px-3.5 py-2 font-mono text-xs text-faint">
         <span>markdown · drop or paste images</span>
-        <button type="button" onClick={() => fileInput.current?.click()} className="cursor-pointer rounded-md border border-line px-2.5 py-1 text-text hover:border-blue hover:text-blue">
+        <button type="button" onClick={() => fileInput.current?.click()} className="cursor-pointer rounded-md border border-line px-2.5 py-1 text-text hover:border-link hover:text-link">
           + Image
         </button>
         <input
@@ -235,7 +235,7 @@ export default function PostForm({ post }) {
     <form onSubmit={save} className="mx-auto max-w-[1100px] px-6 pt-10 pb-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div className="font-mono text-[13px] text-muted">
-          <Link href="/admin" className="text-blue">admin</Link> / {post.persisted ? 'edit' : 'new'}
+          <Link href="/admin" className="text-link">admin</Link> / {post.persisted ? 'edit' : 'new'}
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <span className={`font-mono text-[13px] ${form.isDirty || uploading ? 'text-amber' : 'text-muted'}`}>{status}</span>
@@ -258,14 +258,14 @@ export default function PostForm({ post }) {
         onChange={(e) => form.setData('title', e.target.value)}
         placeholder="Title"
         aria-label="Title"
-        className="mb-1 w-full border-0 border-b border-line bg-transparent pt-2 pb-3 text-[30px] font-bold tracking-tight text-head outline-none placeholder:text-faint focus:border-blue"
+        className="mb-1 w-full border-0 border-b border-line bg-transparent pt-2 pb-3 text-[30px] font-bold tracking-tight text-head outline-none placeholder:text-faint focus:border-link"
       />
       <div className="mb-3 min-h-5 text-sm text-red">
         {[form.errors.title, form.errors.content, form.errors.slug, uploadError].filter(Boolean).join(' · ')}
       </div>
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[13px]">
-        <div className="flex gap-1 rounded-lg border border-line bg-panel p-1" role="tablist" aria-label="Editor layout">
+        <div className="flex gap-1 rounded-control border border-line bg-panel p-1" role="tablist" aria-label="Editor layout">
           {MODES.map(([key, label]) => (
             <button key={key} type="button" role="tab" aria-selected={mode === key} onClick={() => setMode(key)} className={segment(mode === key)}>{label}</button>
           ))}
@@ -273,7 +273,7 @@ export default function PostForm({ post }) {
         {mode === 'preview' && (
           <div className="flex items-center gap-3">
             <span className="text-faint">exact reader width</span>
-            <div className="flex gap-1 rounded-lg border border-line bg-panel p-1" role="tablist" aria-label="Preview width">
+            <div className="flex gap-1 rounded-control border border-line bg-panel p-1" role="tablist" aria-label="Preview width">
               {[['desktop', 'Desktop'], ['phone', 'Phone']].map(([key, label]) => (
                 <button key={key} type="button" role="tab" aria-selected={width === key} onClick={() => setWidth(key)} className={segment(width === key)}>{label}</button>
               ))}

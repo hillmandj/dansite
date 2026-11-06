@@ -1,4 +1,4 @@
-import { Link, router } from '@inertiajs/react'
+import { Link, router, usePage } from '@inertiajs/react'
 import { useState } from 'react'
 import SiteLayout from '../../../layouts/SiteLayout'
 import Switch from '../../../components/Switch'
@@ -8,8 +8,14 @@ const SETTINGS = [
   ['show_writing', 'Writing section', 'List recent posts on the home page.'],
 ]
 
-export default function AdminPosts({ posts, settings: initialSettings }) {
+export default function AdminPosts({ posts, settings: initialSettings, themes }) {
   const [settings, setSettings] = useState(initialSettings)
+  const siteTheme = usePage().props.site_theme
+
+  // Saved right away; every page (this one included) switches to the new theme.
+  const changeTheme = (value) => {
+    router.patch('/admin/settings', { settings: { site_theme: value } }, { preserveScroll: true, preserveState: true })
+  }
 
   const toggleSetting = (key, value) => {
     const next = { ...settings, [key]: value }
@@ -52,7 +58,7 @@ export default function AdminPosts({ posts, settings: initialSettings }) {
               {posts.map((post) => (
                 <tr key={post.slug} className="border-b border-line-soft last:border-0">
                   <td className="px-[18px] py-3.5 font-medium text-head">
-                    <Link href={`/admin/posts/${post.slug}/edit`} className="hover:text-blue">{post.title}</Link>
+                    <Link href={`/admin/posts/${post.slug}/edit`} className="hover:text-link">{post.title}</Link>
                   </td>
                   <td className="px-[18px] py-3.5">
                     <span className={`rounded-full px-2 py-0.5 font-mono text-[11px] font-semibold ${
@@ -63,8 +69,8 @@ export default function AdminPosts({ posts, settings: initialSettings }) {
                   </td>
                   <td className="hidden px-[18px] py-3.5 text-[13px] whitespace-nowrap text-muted sm:table-cell">{post.updated}</td>
                   <td className="px-[18px] py-3.5 text-right text-[13px] whitespace-nowrap">
-                    <Link href={`/admin/posts/${post.slug}/edit`} className="ml-3.5 text-blue">edit</Link>
-                    <Link href={`/blog/${post.slug}`} className="ml-3.5 text-blue">view</Link>
+                    <Link href={`/admin/posts/${post.slug}/edit`} className="ml-3.5 text-link">edit</Link>
+                    <Link href={`/blog/${post.slug}`} className="ml-3.5 text-link">view</Link>
                     <button type="button" onClick={() => destroy(post)} className="ml-3.5 cursor-pointer text-red">delete</button>
                   </td>
                 </tr>
@@ -88,6 +94,19 @@ export default function AdminPosts({ posts, settings: initialSettings }) {
               <Switch label={title} checked={settings[key]} onChange={(v) => toggleSetting(key, v)} />
             </label>
           ))}
+          <label className="grid gap-2 border-t border-line-soft pt-3.5">
+            <span>
+              <b className="block text-[15px] font-medium text-head">Site theme</b>
+              <span className="text-[13px] text-muted">Colors and style for every visitor. Each one has a light and dark mode.</span>
+            </span>
+            <select
+              value={siteTheme}
+              onChange={(e) => changeTheme(e.target.value)}
+              className="w-full cursor-pointer rounded-control border border-line bg-panel-2 px-3 py-2 text-sm text-head outline-none focus:border-link"
+            >
+              {themes.map(({ key, label }) => <option key={key} value={key}>{label}</option>)}
+            </select>
+          </label>
         </aside>
       </div>
     </div>

@@ -18,6 +18,10 @@ export default function Heatmap({ days, total, activeDays }) {
 
   return (
     <div className="panel p-[22px]">
+      <div className="mb-3.5 hidden justify-between font-mono text-xs text-faint term:flex">
+        <span className="text-muted"><b className="font-medium text-hot">:</b>Contributions</span>
+        <span>last 12 months</span>
+      </div>
       <div
         ref={grid}
         className="grid grid-flow-col justify-between gap-[3px] overflow-x-auto"

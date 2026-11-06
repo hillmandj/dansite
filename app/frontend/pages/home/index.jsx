@@ -14,6 +14,7 @@ const LINKS = {
 const INTERESTS = [
   {
     color: 'green',
+    file: 'observability.md',
     title: 'Observability',
     icon: <><path d="M3 3v18h18" /><path d="M7 15l4-4 3 3 5-6" /></>,
     body: (
@@ -26,12 +27,14 @@ const INTERESTS = [
   },
   {
     color: 'violet',
+    file: 'devex.md',
     title: 'Developer experience',
     icon: <><path d="M16 18l6-6-6-6" /><path d="M8 6l-6 6 6 6" /></>,
     body: "Fast local setups, reliable CI, and tools that get out of the way. A lot of my favorite work has been making other engineers' days a little easier.",
   },
   {
     color: 'amber',
+    file: 'ai.md',
     title: 'Building with AI',
     icon: <><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" /><path d="M19 17l.8 2.2L22 20l-2.2.8L19 23l-.8-2.2L16 20l2.2-.8z" /></>,
     body: "Exploring how AI fits into real engineering work, from coding assistants to small tools of my own. I'll be sharing projects here soon.",
@@ -39,9 +42,9 @@ const INTERESTS = [
 ]
 
 const ACCENT = {
-  green: { icon: 'bg-green/15 text-green', hover: 'hover:border-green/50' },
-  violet: { icon: 'bg-violet/15 text-violet', hover: 'hover:border-violet/50' },
-  amber: { icon: 'bg-amber/15 text-amber', hover: 'hover:border-amber/50' },
+  green: { icon: 'bg-green/15 text-green', hover: 'hover:border-green/50', text: 'text-green', dot: 'bg-green' },
+  violet: { icon: 'bg-violet/15 text-violet', hover: 'hover:border-violet/50', text: 'text-violet', dot: 'bg-violet' },
+  amber: { icon: 'bg-amber/15 text-amber', hover: 'hover:border-amber/50', text: 'text-amber', dot: 'bg-amber' },
 }
 
 const JOBS = [
@@ -52,9 +55,10 @@ const JOBS = [
 
 const HOBBIES = ['🚴 Biking', '⛷️ Skiing', '🏀 Basketball', '📚 Graphic novels', '🎮 Video games', '🏈 Fantasy sports']
 
-function Section({ id, dot, title, children, className = '' }) {
+// `file` is the name the statusline shows while this section is on screen (terminal themes).
+function Section({ id, file, dot, title, children, className = '' }) {
   return (
-    <section id={id} className={`scroll-mt-20 py-11 ${className}`} style={dot ? { '--dot': `var(--c-${dot})` } : undefined}>
+    <section id={id} data-file={file} className={`scroll-mt-20 py-11 ${className}`} style={dot ? { '--dot': `var(--c-${dot})` } : undefined}>
       {title && <h2 className="section-title mb-5">{title}</h2>}
       {children}
     </section>
@@ -70,15 +74,17 @@ export default function Home({ posts, more_posts: morePosts, hobby_posts: hobbyP
     <>
       <div className="wrap">
         {/* Intro */}
-        <section className="grid grid-cols-[minmax(0,1fr)] items-center gap-7 pt-12 pb-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-14 md:pt-[88px] md:pb-16">
+        <section data-file="index.md" className="grid grid-cols-[minmax(0,1fr)] items-center gap-7 pt-12 pb-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-14 md:pt-[88px] md:pb-16">
           <div className="min-w-0">
             <p className="mb-6 overflow-x-auto whitespace-nowrap font-mono text-[13px] text-muted">
-              <span className="font-semibold text-green">INFO</span>{' '}
-              <span className="text-indigo">msg</span>=<span className="text-str">"hi! welcome to my site"</span>{' '}
-              <span className="text-indigo">name</span>=<span className="text-str">dan</span>{' '}
-              <span className="text-indigo">status</span>=<span className="text-str">glad_you_stopped_by</span>
+              <span className="font-semibold text-green term:rounded-[3px] term:bg-green term:px-1.5 term:py-px term:font-bold term:text-on-fill">INFO</span>{' '}
+              <span className="text-key">msg</span>=<span className="text-str">"hi! welcome to my site"</span>{' '}
+              <span className="text-key">name</span>=<span className="text-str">dan</span>{' '}
+              <span className="text-key">status</span>=<span className="text-str">glad_you_stopped_by</span>
             </p>
-            <h1 className="text-[clamp(34px,5vw,52px)] font-bold leading-[1.1] tracking-[-.03em]">Hi, I'm Dan.</h1>
+            <h1 className="font-display text-[clamp(34px,5vw,52px)] font-bold leading-[1.1] tracking-[-.03em] term:text-[clamp(34px,5vw,50px)]">
+              Hi, I'm Dan.<span className="cursor hidden term:inline-block" aria-hidden="true" />
+            </h1>
             <p className="mt-3.5 max-w-[620px] text-[22px] leading-[1.45] font-medium tracking-[-.01em] text-head">
               I'm a Staff Software Engineer at Zendesk. I've spent 11+ years building web apps, developer tools and
               the infrastructure underneath them, and I still <span className="mark">love writing code</span>.
@@ -101,21 +107,26 @@ export default function Home({ posts, more_posts: morePosts, hobby_posts: hobbyP
           </section>
         )}
 
-        <Section id="interests" dot="green" title="What I'm into">
+        <Section id="interests" file="interests.md" dot="green" title="What I'm into">
           <div className="grid grid-cols-[minmax(0,1fr)] gap-3.5 md:grid-cols-3">
-            {INTERESTS.map(({ color, title, icon, body }) => (
-              <div key={title} className={`panel p-[22px] transition-colors ${ACCENT[color].hover}`}>
-                <div className={`mb-3.5 grid h-[34px] w-[34px] place-items-center rounded-[9px] ${ACCENT[color].icon}`}>
+            {INTERESTS.map(({ color, file, title, icon, body }) => (
+              <div key={title} className={`panel relative p-[22px] transition-colors term:mt-2.5 term:pt-[26px] ${ACCENT[color].hover}`}>
+                {/* Terminal themes: a floating-window title set into the top border. */}
+                <span className={`absolute -top-2.5 left-3.5 hidden bg-bg px-2 font-mono text-xs font-medium term:block ${ACCENT[color].text}`}>{file}</span>
+                <div className={`mb-3.5 grid h-[34px] w-[34px] place-items-center rounded-control term:hidden ${ACCENT[color].icon}`}>
                   <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{icon}</svg>
                 </div>
-                <h3 className="mb-2 text-[17px] font-semibold">{title}</h3>
+                <h3 className="mb-2 flex items-center gap-2.5 text-[17px] font-semibold">
+                  <span className={`hidden h-2 w-2 rounded-[2px] term:block ${ACCENT[color].dot}`} />
+                  {title}
+                </h3>
                 <p className="text-[15px]">{body}</p>
               </div>
             ))}
           </div>
         </Section>
 
-        <section className="grid grid-cols-[minmax(0,1fr)] gap-7 py-11 md:grid-cols-2 md:gap-12" style={{ '--dot': 'var(--c-violet)' }}>
+        <section data-file="about.md" className="grid grid-cols-[minmax(0,1fr)] gap-7 py-11 md:grid-cols-2 md:gap-12" style={{ '--dot': 'var(--c-violet)' }}>
           <div>
             <h2 className="section-title mb-5">How I like to work</h2>
             <div className="max-w-[680px] space-y-3.5 text-[17px]">
@@ -140,39 +151,40 @@ export default function Home({ posts, more_posts: morePosts, hobby_posts: hobbyP
             </p>
             <div className="mt-[18px] flex flex-wrap gap-2">
               {HOBBIES.map((h) => (
-                <span key={h} className="rounded-full border border-line bg-panel px-3 py-1.5 text-sm">{h}</span>
+                <span key={h} className="rounded-full border border-line bg-panel px-3 py-1.5 text-sm term:rounded-control">{h}</span>
               ))}
             </div>
           </div>
         </section>
 
-        <Section id="work" dot="blue" title="Where I've worked">
+        <Section id="work" file="work.md" dot="link" title="Where I've worked">
           <div>
-            {JOBS.map(({ company, role, years }) => (
-              <div key={company} className="flex justify-between gap-4 border-b border-line py-3.5">
-                <span>
+            {JOBS.map(({ company, role, years }, i) => (
+              <div key={company} className="flex justify-between gap-4 border-b border-line py-3.5 term:border-line-soft">
+                <span className="hidden w-7 flex-none text-right font-mono text-[13px] leading-[1.9] text-faint term:block">{i + 1}</span>
+                <span className="flex-1">
                   <b className="font-semibold text-head">{company}</b> <span className="text-muted">· {role}</span>
                 </span>
                 <span className="font-mono text-[13px] whitespace-nowrap text-faint">{years}</span>
               </div>
             ))}
           </div>
-          <p className="mt-3.5 text-sm text-muted">Earlier in my career I also worked at Casper, Stash and Chloe + Isabel.</p>
+          <p className="mt-3.5 text-sm text-muted term:pl-11">Earlier in my career I also worked at Casper, Stash and Chloe + Isabel.</p>
         </Section>
 
         {settings.show_writing && posts.length > 0 && (
-          <Section id="writing" dot="amber" title="Writing">
-            <PostList posts={posts} />
+          <Section id="writing" file="writing.md" dot="amber" title="Writing">
+            <PostList posts={posts} numbered />
             {morePosts && (
-              <Link href="/blog" className="mt-4 inline-block font-mono text-[13px] text-blue hover:underline">All writing →</Link>
+              <Link href="/blog" className="mt-4 inline-block font-mono text-[13px] text-link hover:underline term:ml-11">All writing →</Link>
             )}
           </Section>
         )}
 
-        <section id="contact" className="scroll-mt-20 py-11">
+        <section id="contact" data-file="contact.md" className="scroll-mt-20 py-11">
           <div className="panel grid grid-cols-[minmax(0,1fr)] items-center gap-[30px] p-6 md:grid-cols-[1.2fr_1fr] md:p-[30px]">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight">Let's talk</h2>
+              <h2 className="font-display text-2xl font-semibold tracking-tight">Let's talk</h2>
               <p className="mt-2">
                 If you ever want to talk about programming, or would like to work together on something, please reach
                 out. I'd love to hear from you.
@@ -185,7 +197,7 @@ export default function Home({ posts, more_posts: morePosts, hobby_posts: hobbyP
                 ['github.com/hillmandj', 'code', LINKS.github],
                 ['linkedin.com/in/hillmandj', 'work', LINKS.linkedin],
               ].map(([label, kind, href]) => (
-                <a key={kind} href={href} className="flex justify-between rounded-[9px] border border-line px-3.5 py-3 text-sm text-head transition-colors hover:border-blue">
+                <a key={kind} href={href} className="flex justify-between rounded-control border border-line px-3.5 py-3 text-sm text-head transition-colors hover:border-link">
                   {label} <span className="text-xs text-faint">{kind}</span>
                 </a>
               ))}

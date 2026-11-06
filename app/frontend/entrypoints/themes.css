@@ -1,0 +1,257 @@
+/*
+ * Site themes. Each theme is a list of named colors (plus fonts and corner radii).
+ * Components never use raw colors, only these names (via Tailwind classes such as
+ * bg-panel, text-head, border-line, text-link), so switching theme just swaps the list.
+ *
+ * <html> carries two attributes, both set before the page paints:
+ *   data-scheme="solarized|gruvbox|catppuccin|classic"  chosen in the admin (SiteSetting#site_theme)
+ *   data-theme="dark|light"                              chosen by each visitor with the toggle
+ *
+ * To add a theme: add its key to SiteSetting::THEMES and a dark + light block here.
+ *
+ * Token meanings:
+ *   bg / bg-alt       page background / header + statusline
+ *   panel / panel-2   cards / inset areas (inline code, inputs)
+ *   line / line-soft  borders / subtle dividers
+ *   head / text / muted / faint   text, from strongest to weakest
+ *   link              links and interactive text
+ *   fill / on-fill    primary button (and statusline mode) background / its text
+ *   hot               small accent marks in terminal themes (cursor, ##, active tab)
+ *   key / str         log-line keys and values
+ *   green / violet / amber / red   accents for sections, badges and log levels
+ *   h0 - h4           contribution heatmap, empty to busiest
+ */
+
+/* ---------- Terminal themes share fonts and corners ---------- */
+:root {
+  --t-font-display: "JetBrains Mono", ui-monospace, monospace;
+  --t-font-ui: "JetBrains Mono", ui-monospace, monospace;
+  --t-font-code: "JetBrains Mono", ui-monospace, monospace;
+  --t-radius-panel: 8px;
+  --t-radius-control: 6px;
+}
+
+/* ---------- Solarized (default) ---------- */
+:root,
+:root[data-scheme="solarized"] {
+  --c-bg: #0e1c20;
+  --c-bg-alt: #0a1518;
+  --c-panel: #13262b;
+  --c-panel-2: #1a2c31;
+  --c-line: #24393f;
+  --c-line-soft: #1a2c31;
+  --c-text: #93a1a1;
+  --c-head: #eee8d5;
+  --c-muted: #839496;
+  --c-faint: #586e75;
+  --c-link: #268bd2;
+  --c-fill: #cb4b16;
+  --c-on-fill: #fdf6e3;
+  --c-hot: #d33682;
+  --c-key: #268bd2;
+  --c-str: #2aa198;
+  --c-green: #859900;
+  --c-violet: #6c71c4;
+  --c-amber: #b58900;
+  --c-red: #dc322f;
+  --c-h0: #24393f;
+  --c-h1: #3d5419;
+  --c-h2: #556b0f;
+  --c-h3: #708200;
+  --c-h4: #859900;
+  --shadow-panel: none;
+}
+:root[data-scheme="solarized"][data-theme="light"] {
+  --c-bg: #fdf6e3;
+  --c-bg-alt: #eee8d5;
+  --c-panel: #fffbef;
+  --c-panel-2: #f5efdc;
+  --c-line: #ddd6c1;
+  --c-line-soft: #eee8d5;
+  --c-text: #586e75;
+  --c-head: #073642;
+  --c-muted: #657b83;
+  --c-faint: #93a1a1;
+  --c-h0: #e6dec6;
+  --c-h1: #d6dd9a;
+  --c-h2: #b5c25a;
+  --c-h3: #98a51e;
+  --c-h4: #859900;
+}
+
+/* ---------- Gruvbox ---------- */
+:root[data-scheme="gruvbox"] {
+  --c-bg: #282828;
+  --c-bg-alt: #1d2021;
+  --c-panel: #32302f;
+  --c-panel-2: #3c3836;
+  --c-line: #45403d;
+  --c-line-soft: #3a3735;
+  --c-text: #d5c4a1;
+  --c-head: #ebdbb2;
+  --c-muted: #a89984;
+  --c-faint: #7c6f64;
+  --c-link: #83a598;
+  --c-fill: #fe8019;
+  --c-on-fill: #1d2021;
+  --c-hot: #fe8019;
+  --c-key: #8ec07c;
+  --c-str: #b8bb26;
+  --c-green: #b8bb26;
+  --c-violet: #d3869b;
+  --c-amber: #fabd2f;
+  --c-red: #fb4934;
+  --c-h0: #45403d;
+  --c-h1: #5a5a1e;
+  --c-h2: #7d8020;
+  --c-h3: #a0a324;
+  --c-h4: #b8bb26;
+  --shadow-panel: none;
+}
+:root[data-scheme="gruvbox"][data-theme="light"] {
+  --c-bg: #fbf1c7;
+  --c-bg-alt: #f2e5bc;
+  --c-panel: #f9f5d7;
+  --c-panel-2: #f2e5bc;
+  --c-line: #d5c4a1;
+  --c-line-soft: #ebdbb2;
+  --c-text: #3c3836;
+  --c-head: #282828;
+  --c-muted: #7c6f64;
+  --c-faint: #a89984;
+  --c-link: #076678;
+  --c-fill: #af3a03;
+  --c-on-fill: #fbf1c7;
+  --c-hot: #af3a03;
+  --c-key: #427b58;
+  --c-str: #79740e;
+  --c-green: #79740e;
+  --c-violet: #8f3f71;
+  --c-amber: #b57614;
+  --c-red: #9d0006;
+  --c-h0: #ebdbb2;
+  --c-h1: #d5d39a;
+  --c-h2: #b4b25a;
+  --c-h3: #98971a;
+  --c-h4: #79740e;
+}
+
+/* ---------- Catppuccin ---------- */
+:root[data-scheme="catppuccin"] {
+  --c-bg: #1e1e2e;
+  --c-bg-alt: #181825;
+  --c-panel: #24273a;
+  --c-panel-2: #313244;
+  --c-line: #363a4f;
+  --c-line-soft: #2b2e42;
+  --c-text: #bac2de;
+  --c-head: #cdd6f4;
+  --c-muted: #9399b2;
+  --c-faint: #6c7086;
+  --c-link: #89b4fa;
+  --c-fill: #cba6f7;
+  --c-on-fill: #1e1e2e;
+  --c-hot: #f5a3c7;
+  --c-key: #b4befe;
+  --c-str: #a6e3a1;
+  --c-green: #a6e3a1;
+  --c-violet: #cba6f7;
+  --c-amber: #f9e2af;
+  --c-red: #f38ba8;
+  --c-h0: #2b2e42;
+  --c-h1: #3f5a45;
+  --c-h2: #5f8a5f;
+  --c-h3: #86c084;
+  --c-h4: #a6e3a1;
+  --shadow-panel: none;
+}
+:root[data-scheme="catppuccin"][data-theme="light"] {
+  --c-bg: #eff1f5;
+  --c-bg-alt: #e6e9ef;
+  --c-panel: #f7f8fb;
+  --c-panel-2: #e6e9ef;
+  --c-line: #ccd0da;
+  --c-line-soft: #dce0e8;
+  --c-text: #4c4f69;
+  --c-head: #303446;
+  --c-muted: #6c6f85;
+  --c-faint: #9ca0b0;
+  --c-link: #1e66f5;
+  --c-fill: #8839ef;
+  --c-on-fill: #ffffff;
+  --c-hot: #d6338a;
+  --c-key: #7287fd;
+  --c-str: #40a02b;
+  --c-green: #40a02b;
+  --c-violet: #8839ef;
+  --c-amber: #c47a12;
+  --c-red: #d20f39;
+  --c-h0: #dce0e8;
+  --c-h1: #b9dfb0;
+  --c-h2: #85c776;
+  --c-h3: #5bab4a;
+  --c-h4: #40a02b;
+}
+
+/* ---------- Classic (the 2026-11 design: no terminal touches) ---------- */
+:root[data-scheme="classic"] {
+  --t-font-display: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --t-font-ui: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --t-font-code: "IBM Plex Mono", ui-monospace, monospace;
+  --t-radius-panel: 12px;
+  --t-radius-control: 9px;
+
+  --c-bg: #0a0f1a;
+  --c-bg-alt: #0a0f1a;
+  --c-panel: #0e1524;
+  --c-panel-2: #121b2e;
+  --c-line: #1c2740;
+  --c-line-soft: #151e33;
+  --c-text: #b9c6d8;
+  --c-head: #eef3fa;
+  --c-muted: #7586a0;
+  --c-faint: #4d5d78;
+  --c-link: #5aa5ff;
+  --c-fill: #2f7cf6;
+  --c-on-fill: #ffffff;
+  --c-hot: #5aa5ff;
+  --c-key: #8b9cff;
+  --c-str: #a9d1ff;
+  --c-green: #3ddc84;
+  --c-violet: #a78bfa;
+  --c-amber: #fbbf24;
+  --c-red: #f2788f;
+  --c-h0: #141c2d;
+  --c-h1: #0e4429;
+  --c-h2: #006d32;
+  --c-h3: #26a641;
+  --c-h4: #39d353;
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, .02);
+}
+:root[data-scheme="classic"][data-theme="light"] {
+  --c-bg: #f6f8fb;
+  --c-bg-alt: #f6f8fb;
+  --c-panel: #ffffff;
+  --c-panel-2: #f1f5fb;
+  --c-line: #e1e7f0;
+  --c-line-soft: #ebeff5;
+  --c-text: #3b4a60;
+  --c-head: #0c1729;
+  --c-muted: #66758c;
+  --c-faint: #9aa7ba;
+  --c-link: #1b6ef3;
+  --c-fill: #1b6ef3;
+  --c-hot: #1b6ef3;
+  --c-key: #5b5bd6;
+  --c-str: #1d58b8;
+  --c-green: #14a05a;
+  --c-violet: #7c5cf0;
+  --c-amber: #d48a06;
+  --c-red: #d63d5c;
+  --c-h0: #e8edf3;
+  --c-h1: #aee9c6;
+  --c-h2: #5fcf8f;
+  --c-h3: #22a35c;
+  --c-h4: #137a42;
+  --shadow-panel: 0 1px 2px rgba(16, 32, 64, .04), 0 4px 16px rgba(16, 32, 64, .04);
+}

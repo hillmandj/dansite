@@ -82,5 +82,28 @@ RSpec.describe "Admin posts", type: :request, inertia: true do
       expect(inertia.props[:settings]).to include("show_heatmap" => false)
       expect(inertia.props[:contributions]).to be_nil
     end
+
+    it "lists the site themes" do
+      get "/admin"
+      expect(inertia.props[:themes].map { |t| t[:key] }).to eq(SiteSetting::THEMES.keys)
+    end
+
+    it "switches the site theme" do
+      patch "/admin/settings", params: { settings: { site_theme: "gruvbox" } }
+
+      expect(SiteSetting.current.site_theme).to eq("gruvbox")
+      expect(flash[:notice]).to eq("Site theme set to Gruvbox")
+
+      get "/"
+      expect(inertia.props[:site_theme]).to eq("gruvbox")
+      expect(response.body).to include('data-scheme="gruvbox"')
+    end
+
+    it "rejects an unknown theme" do
+      patch "/admin/settings", params: { settings: { site_theme: "comic-sans" } }
+
+      expect(SiteSetting.current.site_theme).to eq("solarized")
+      expect(flash[:alert]).to be_present
+    end
   end
 end

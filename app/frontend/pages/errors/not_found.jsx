@@ -10,7 +10,7 @@ export default function NotFound({ path }) {
     return { times: [0, 9, 15, 24, 27].map(at), traceId: Math.random().toString(16).slice(2, 10) }
   }, [])
 
-  const k = (text) => <span className="text-indigo">{text}</span>
+  const k = (text) => <span className="text-key">{text}</span>
   const s = (text) => <span className="text-str">{text}</span>
   const lines = [
     ['INFO ', 'text-green', <>request received  {k('method')}={s('GET')} {k('path')}={s(`"${path}"`)}</>],
@@ -23,7 +23,7 @@ export default function NotFound({ path }) {
   return (
     <div className="mx-auto max-w-[760px] px-6 pt-20 pb-10">
       <div className="font-mono text-sm font-semibold tracking-[.08em] text-amber">404 · NOT FOUND</div>
-      <h1 className="mt-2.5 mb-3.5 text-[clamp(34px,5vw,50px)] leading-[1.1] font-bold tracking-[-.03em]">
+      <h1 className="mt-2.5 mb-3.5 font-display text-[clamp(34px,5vw,50px)] leading-[1.1] font-bold tracking-[-.03em]">
         I checked the logs. There's nothing here.
       </h1>
       <p className="max-w-[560px] text-lg">

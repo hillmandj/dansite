@@ -13,6 +13,8 @@ RSpec.describe "Pages", type: :request do
       expect(inertia).to render_component("home/index")
       expect(inertia.props[:posts].map { |p| p[:title] }).to eq(%w[Newer Older])
       expect(inertia.props[:settings]).to eq("show_heatmap" => true, "show_writing" => true)
+      expect(inertia.props[:site_theme]).to eq("solarized")
+      expect(response.body).to include('data-scheme="solarized"')
     end
 
     it "shows only the newest posts and says when there are more" do

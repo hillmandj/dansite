@@ -6,7 +6,8 @@ module Admin
       set_meta(title: "Posts", description: "Admin")
       render inertia: "admin/posts/index", props: {
         posts: Post.newest_first.map { |post| row(post) },
-        settings: SiteSetting.current.as_props
+        settings: SiteSetting.current.as_props,
+        themes: SiteSetting::THEMES.map { |key, theme| { key:, label: theme[:label] } }
       }
     end
 

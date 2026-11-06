@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/react'
 import SiteLayout from '../../layouts/SiteLayout'
 
-const input = 'w-full rounded-[9px] border border-line bg-panel px-3.5 py-2.5 text-head outline-none transition-colors focus:border-blue'
+const input = 'w-full rounded-control border border-line bg-panel px-3.5 py-2.5 text-head outline-none transition-colors focus:border-link'
 
 export default function Login() {
   const form = useForm({ user: { email: '', password: '', remember_me: false } })
