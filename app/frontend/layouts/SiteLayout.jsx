@@ -40,7 +40,7 @@ function useSiteTheme(scheme) {
 
 export default function SiteLayout({ children, hideNav = false }) {
   const { props, url, component } = usePage()
-  const section = useActiveSection(url)
+  const [section, selectSection] = useActiveSection(url)
   const file = hideNav ? null : statuslineFile(component, props, section)
   useSiteTheme(props.site_theme)
 
@@ -62,6 +62,7 @@ export default function SiteLayout({ children, hideNav = false }) {
                     <a
                       key={href}
                       href={href}
+                      onClick={() => selectSection(id)}
                       className={`hover:text-link term:rounded term:px-3 term:py-1 term:hover:bg-panel term:hover:text-head ${
                         active ? 'term:bg-panel term:text-head term:shadow-[inset_0_-2px_0_var(--c-hot)]' : ''
                       }`}
