@@ -37,7 +37,11 @@ class Post < ApplicationRecord
 
   private
 
+  # The slug follows the title until the post is published (a save that
+  # publishes still picks up the new title). After that it stays put so
+  # shared links keep working.
   def generate_slug
-    self.slug ||= title&.parameterize
+    return if title.blank?
+    self.slug = title.parameterize if slug.blank? || published_at_in_database.nil?
   end
 end

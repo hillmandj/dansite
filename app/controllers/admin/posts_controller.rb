@@ -34,7 +34,8 @@ module Admin
       if @post.update(post_attributes)
         redirect_to edit_admin_post_path(@post), notice: "Saved."
       else
-        redirect_to edit_admin_post_path(@post), inertia: { errors: @post.errors.to_hash(true).transform_values(&:to_sentence) }
+        # The slug may have changed in memory; send the editor back to the saved one.
+        redirect_to edit_admin_post_path(@post.slug_in_database), inertia: { errors: @post.errors.to_hash(true).transform_values(&:to_sentence) }
       end
     end
 

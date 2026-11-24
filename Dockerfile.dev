@@ -1,6 +1,6 @@
 # Development image. Source code is bind-mounted, gems live in a named volume.
 # Used by compose.yaml. For the production image, see Dockerfile.
-ARG RUBY_VERSION=4.0.9
+ARG RUBY_VERSION=4.0.10
 # Keep NODE_VERSION in sync with .node-version
 ARG NODE_VERSION=26.13.0
 FROM docker.io/library/node:$NODE_VERSION-slim AS node
