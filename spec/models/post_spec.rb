@@ -19,6 +19,24 @@ RSpec.describe Post, type: :model do
     expect(post.to_param).to eq("hello-world")
   end
 
+  it "updates a draft's slug when its title changes" do
+    post = create(:post, :draft, title: "Working Title")
+    post.update!(title: "Final Title")
+    expect(post.slug).to eq("final-title")
+  end
+
+  it "uses the latest title when a draft is renamed and published in one save" do
+    post = create(:post, :draft, title: "Working Title")
+    post.update!(title: "Final Title", published_at: Time.current)
+    expect(post.slug).to eq("final-title")
+  end
+
+  it "keeps a published post's slug when its title changes" do
+    post = create(:post, title: "Original Title")
+    post.update!(title: "Renamed")
+    expect(post.slug).to eq("original-title")
+  end
+
   it "requires a unique slug" do
     create(:post, title: "Same Title")
     expect(build(:post, title: "Same Title")).not_to be_valid

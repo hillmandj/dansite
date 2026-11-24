@@ -55,6 +55,24 @@ RSpec.describe "Admin posts", type: :request, inertia: true do
       expect(record.reload).to have_attributes(title: "Edited", published_at: Time.zone.local(2016, 1, 16))
     end
 
+    it "moves a renamed draft to its new slug" do
+      record = create(:post, :draft, title: "Working Title")
+
+      patch "/admin/posts/#{record.slug}", params: { post: { title: "Final Title", content: "x", published: "false" } }
+
+      expect(response).to redirect_to("/admin/posts/final-title/edit")
+      expect(record.reload.slug).to eq("final-title")
+    end
+
+    it "returns to the saved slug when renaming a draft fails validation" do
+      record = create(:post, :draft, title: "Working Title")
+
+      patch "/admin/posts/#{record.slug}", params: { post: { title: "Final Title", content: "", published: "false" } }
+
+      expect(response).to redirect_to("/admin/posts/working-title/edit")
+      expect(record.reload.slug).to eq("working-title")
+    end
+
     it "unpublishes a post back to a draft" do
       record = create(:post)
       patch "/admin/posts/#{record.slug}", params: { post: { title: record.title, content: "x", published: "false" } }
